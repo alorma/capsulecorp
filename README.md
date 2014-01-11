@@ -1,7 +1,5 @@
-capsulecorp
+LICENSE
 ===========
-
-=LICENSE=
 
 Copyright 2014 Nicolas Jafelle
 
