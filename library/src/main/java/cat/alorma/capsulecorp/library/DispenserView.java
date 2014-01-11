@@ -2,6 +2,7 @@ package cat.alorma.capsulecorp.library;
 
 import android.content.Context;
 import android.graphics.Canvas;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
@@ -11,6 +12,7 @@ import android.view.View;
 import java.util.List;
 
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
+import cat.alorma.capsulecorp.library.capsule.impl.TextCapsule;
 
 /**
  * Created by Bernat on 25/11/13.
@@ -40,13 +42,24 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         init(null);
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int max = Math.max(widthMeasureSpec, heightMeasureSpec);
+        setMeasuredDimension(max, max);
+    }
+
     public void init(List<Capsule> capsulesList) {
+        isInEditMode();
         capsules = new SparseArray<Capsule>();
         paint = new Paint();
         if (capsulesList != null) {
             for (int i = 0; i < (capsulesList.size() <= MAX_CAPSULES ? capsulesList.size() : MAX_CAPSULES); i++) {
                 addCapsule(i, capsulesList.get(i));
             }
+        } else {
+            int black = Color.parseColor("#000000");
+            int white = Color.parseColor("#FFFFFF");
+            addCapsule(0, new TextCapsule("C", white, black));
         }
     }
 
@@ -55,7 +68,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
             capsules = new SparseArray<Capsule>();
         }
         if (capsule != null) {
-            if (capsulePosition > 0 && capsulePosition < MAX_CAPSULES) {
+            if (capsulePosition >= 0 && capsulePosition <= MAX_CAPSULES) {
                 capsule.setCapsuleListener(this);
                 capsules.put(capsulePosition, capsule);
             }
@@ -69,7 +82,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
         canvas.save();
 
-        if (capsules.size() > 0) {
+        if (capsules != null && capsules.size() > 0) {
             switch (capsules.size()) {
                 case 1:
                     drawOneCapsule(canvas, capsules.get(0));
@@ -90,7 +103,8 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     private void drawOneCapsule(Canvas canvas, Capsule capsule) {
         Rect clipBounds = canvas.getClipBounds();
-        capsule.boom(canvas, paint, clipBounds);
+
+        drawCapsule(canvas, capsule, clipBounds);
     }
 
     private void drawTwoCapsule(Canvas canvas, Capsule capsule1, Capsule capsule2) {
@@ -106,8 +120,8 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         Rect rect1 = new Rect(left, top, centerX, bottom);
         Rect rect2 = new Rect(centerX, top, right, bottom);
 
-        capsule1.boom(canvas, paint, rect1);
-        capsule2.boom(canvas, paint, rect2);
+        drawCapsule(canvas, capsule1, rect1);
+        drawCapsule(canvas, capsule2, rect2);
 
     }
 
@@ -126,9 +140,9 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         Rect rect2 = new Rect(centerX, top, right, centerY);
         Rect rect3 = new Rect(centerX, centerY, right, bottom);
 
-        capsule1.boom(canvas, paint, rect1);
-        capsule2.boom(canvas, paint, rect2);
-        capsule3.boom(canvas, paint, rect3);
+        drawCapsule(canvas, capsule1, rect1);
+        drawCapsule(canvas, capsule2, rect2);
+        drawCapsule(canvas, capsule3, rect3);
     }
 
     private void drawFourCapsule(Canvas canvas, Capsule capsule1, Capsule capsule2, Capsule capsule3, Capsule capsule4) {
@@ -147,10 +161,16 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         Rect rect3 = new Rect(left, centerY, centerX, bottom);
         Rect rect4 = new Rect(centerX, centerY, right, bottom);
 
-        capsule1.boom(canvas, paint, rect1);
-        capsule2.boom(canvas, paint, rect2);
-        capsule3.boom(canvas, paint, rect3);
-        capsule4.boom(canvas, paint, rect4);
+        drawCapsule(canvas, capsule1, rect1);
+        drawCapsule(canvas, capsule2, rect2);
+        drawCapsule(canvas, capsule3, rect3);
+        drawCapsule(canvas, capsule4, rect4);
+    }
+
+    private void drawCapsule(Canvas canvas, Capsule capsule, Rect rect) {
+        if (capsule != null) {
+                capsule.boom(canvas, paint, rect);
+        }
     }
 
     public void clear() {
