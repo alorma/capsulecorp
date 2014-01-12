@@ -1,4 +1,4 @@
-package cat.alorma.capsules.ui.capsules;
+package cat.alorma.capsulecorp.library.capsule.impl;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,9 +14,9 @@ import cat.alorma.capsulecorp.library.capsule.abs.ImageUrlCapsule;
 /**
  * Created by Bernat on 12/01/14.
  */
-public class CustomUrlBitmapCapsule extends ImageUrlCapsule {
+public class UrlBitmapCapsule extends ImageUrlCapsule {
 
-    public CustomUrlBitmapCapsule(Context ctx, String url) {
+    public UrlBitmapCapsule(Context ctx, String url) {
         super(url);
     }
 

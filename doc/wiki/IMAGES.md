@@ -7,3 +7,45 @@
 
     dispenserView.addCapsule(0, capsule);
 ```
+
+ImageCapsule is an abstract class that allows to load images in Thread.
+
+``` java
+public class CustomUrlBitmapCapsule extends ImageUrlCapsule {
+
+    public CustomUrlBitmapCapsule(Context ctx, String url) {
+        super(url);
+    }
+
+    @Override
+    protected void executeAsync(String url) {
+        new AsyncBitmap().execute(url);
+    }
+
+    private class AsyncBitmap extends AsyncTask<String, Void, Bitmap> {
+
+        @Override
+        protected Bitmap doInBackground(String... params) {
+            try {
+                java.net.URL url = new java.net.URL(params[0]);
+                HttpURLConnection connection = (HttpURLConnection) url
+                        .openConnection();
+                connection.setDoInput(true);
+                connection.connect();
+                InputStream input = connection.getInputStream();
+                return BitmapFactory.decodeStream(input);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Bitmap bitmap) {
+            setDownloadedBitmap(bitmap);
+        }
+    }
+}
+```
+
+ImageUrlCapsule is not responsive of make it in a separated thread.
