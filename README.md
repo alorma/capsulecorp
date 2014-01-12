@@ -30,6 +30,13 @@ And, of course, a **mix of them**
 
 * [Usage wiki:](https://github.com/alorma/capsulecorp/blob/master/doc/wiki/README.md) Code examples
 
+## Next steps
+
+* Maven
+* Allow force number of capsules to display
+* Animations
+* ImagesCapsule performance
+
 LICENSE
 ===========
 
