@@ -1,4 +1,4 @@
-## DispenserView [(source)](https://github.com/alorma/capsulecorp/blob/devel/Demo/src/main/java/cat/alorma/capsules/ui/fragment/ColorsFragment.java)
+## DispenserView [(source)](https://github.com/alorma/capsulecorp/blob/master/Demo/src/main/java/cat/alorma/capsules/ui/fragment/ColorsFragment.java)
 
 ![Screen](https://raw2.github.com/alorma/capsulecorp/master/doc/art/screen_colors.png)
 
