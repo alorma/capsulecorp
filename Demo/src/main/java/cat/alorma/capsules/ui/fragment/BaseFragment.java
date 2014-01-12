@@ -22,6 +22,7 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
     private Capsule capsule2;
     private Capsule capsule3;
     private Capsule capsule4;
+    private SeekBar seekBar;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -37,13 +38,12 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
         dispenserView = (DispenserView) view.findViewById(R.id.dispenserView);
 
         generateCapsules();
-        changeView(0);
 
-        SeekBar seekBar = (SeekBar) view.findViewById(R.id.seekBar);
+        seekBar = (SeekBar) view.findViewById(R.id.seekBar);
         seekBar.setOnSeekBarChangeListener(this);
         seekBar.setMax(3);
 
-        changeView(0);
+       seekBar.setProgress(2);
     }
 
     @Override

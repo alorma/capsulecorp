@@ -3,10 +3,12 @@ package cat.alorma.capsules.ui.capsules;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import cat.alorma.capsulecorp.library.R;
 import cat.alorma.capsulecorp.library.capsule.abs.ImageUrlCapsule;
 
 /**
@@ -30,7 +32,6 @@ public class PicassoCapsule extends ImageUrlCapsule {
 
             @Override
             public void onBitmapFailed(Drawable drawable) {
-
             }
 
             @Override
@@ -38,6 +39,11 @@ public class PicassoCapsule extends ImageUrlCapsule {
 
             }
         };
-        Picasso.with(ctx).load(url).into(target);
+        Picasso.with(ctx)
+                .load(url)
+                .skipMemoryCache()
+                .resize(getRect().width(), getRect().height())
+                .centerCrop()
+                .into(target);
     }
 }

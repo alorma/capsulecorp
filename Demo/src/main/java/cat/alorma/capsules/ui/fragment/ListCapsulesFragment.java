@@ -87,7 +87,7 @@ public class ListCapsulesFragment extends ListFragment {
     private List<Capsule> get4Capsules() {
         List<Capsule> capsules = new ArrayList<Capsule>();
         capsules.add(new PicassoCapsule(getActivity(), "http://1.bp.blogspot.com/-1uQRYMklACU/ToQ6aL-5uUI/AAAAAAAAAgQ/9_u0922cL14/s640/cute-puppy-dog-wallpapers.jpg"));
-        capsules.add(new PicassoCapsule(getActivity(), "http://1.bp.blogspot.com/_pdzHm9ymj4Q/TRDwQ9dvmII/AAAAAAAAChc/nkp49tkNVWA/s400/rose-flower.jpg"));
+        capsules.add(new ColorCapsule(Color.parseColor("#FF00FF")));
         capsules.add(new TextCapsule("Helena", Color.parseColor("#000000"), Color.parseColor("#bdc3c7")));
         capsules.add(new PicassoCapsule(getActivity(), "http://pandalabs.pandasecurity.com/es/wp-content/uploads/2010/03/Mariposaimage.jpg"));
         return capsules;
