@@ -5,6 +5,8 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import cat.alorma.capsulecorp.library.capsule.abs.BitmapCapsule;
+
 /**
  * Created by Bernat on 25/11/13.
  */

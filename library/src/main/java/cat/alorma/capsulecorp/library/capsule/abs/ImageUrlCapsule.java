@@ -1,12 +1,6 @@
 package cat.alorma.capsulecorp.library.capsule.abs;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
-
-import java.net.URL;
-
-import cat.alorma.capsulecorp.library.capsule.impl.BitmapCapsule;
 
 /**
  * Created by Bernat on 25/11/13.
@@ -33,6 +27,7 @@ public abstract class ImageUrlCapsule extends BitmapCapsule {
 
     public void setDownloadedBitmap(Bitmap downloadedBitmap) {
         this.downloadedBitmap = downloadedBitmap;
+
         if (getCapsuleListener() != null) {
             getCapsuleListener().invalidateParent();
         }

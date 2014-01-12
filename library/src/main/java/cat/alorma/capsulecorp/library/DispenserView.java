@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
 
@@ -80,13 +81,13 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
                 capsule.setCapsuleListener(this);
                 capsules.put(capsulePosition, capsule);
             }
-            invalidate();
         }
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
 
         canvas.save();
         calculateRects(canvas);

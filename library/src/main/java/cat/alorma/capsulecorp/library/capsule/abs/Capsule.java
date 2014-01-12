@@ -10,8 +10,15 @@ import android.graphics.Rect;
 public abstract class Capsule {
 
     private CapsuleListener capsuleListener;
+    private Canvas canvas;
+    private Paint paint;
+    private Rect rect;
 
-    public abstract void boom(Canvas canvas, Paint paint, Rect rect);
+    public void boom(Canvas canvas, Paint paint, Rect rect) {
+        this.canvas = canvas;
+        this.paint = paint;
+        this.rect = rect;
+    }
 
     public void setCapsuleListener(CapsuleListener capsuleListener) {
         this.capsuleListener = capsuleListener;
@@ -19,6 +26,18 @@ public abstract class Capsule {
 
     public CapsuleListener getCapsuleListener() {
         return capsuleListener;
+    }
+
+    public Canvas getCanvas() {
+        return canvas;
+    }
+
+    public Paint getPaint() {
+        return paint;
+    }
+
+    public Rect getRect() {
+        return rect;
     }
 
     public interface CapsuleListener {
