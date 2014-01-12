@@ -21,6 +21,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     private static final int MAX_CAPSULES = 4;
     private SparseArray<Capsule> capsules;
+    private SparseArray<Rect[]> rects;
     private Paint paint;
 
     public DispenserView(Context context) {
@@ -45,6 +46,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         int max = Math.max(widthMeasureSpec, heightMeasureSpec);
+        super.onMeasure(max, max);
         setMeasuredDimension(max, max);
     }
 
@@ -52,6 +54,12 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         isInEditMode();
         capsules = new SparseArray<Capsule>();
         paint = new Paint();
+
+        if (rects == null) {
+            rects = new SparseArray<Rect[]>();
+
+        }
+
         if (capsulesList != null) {
             for (int i = 0; i < (capsulesList.size() <= MAX_CAPSULES ? capsulesList.size() : MAX_CAPSULES); i++) {
                 addCapsule(i, capsulesList.get(i));
@@ -81,52 +89,40 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         super.onDraw(canvas);
 
         canvas.save();
+        calculateRects(canvas);
 
         if (capsules != null && capsules.size() > 0) {
             switch (capsules.size()) {
                 case 1:
-                    drawOneCapsule(canvas, capsules.get(0));
+                    drawCapsule(canvas, capsules.get(0), rects.get(0)[0]);
                     break;
                 case 2:
-                    drawTwoCapsule(canvas, capsules.get(0), capsules.get(1));
+                    drawCapsule(canvas, capsules.get(0), rects.get(1)[0]);
+                    drawCapsule(canvas, capsules.get(1), rects.get(1)[1]);
                     break;
                 case 3:
-                    drawThreeCapsule(canvas, capsules.get(0), capsules.get(1), capsules.get(2));
+                    drawCapsule(canvas, capsules.get(0), rects.get(2)[0]);
+                    drawCapsule(canvas, capsules.get(1), rects.get(2)[1]);
+                    drawCapsule(canvas, capsules.get(2), rects.get(2)[2]);
                     break;
                 case 4:
-                    drawFourCapsule(canvas, capsules.get(0), capsules.get(1), capsules.get(2), capsules.get(3));
+                    drawCapsule(canvas, capsules.get(0), rects.get(3)[0]);
+                    drawCapsule(canvas, capsules.get(1), rects.get(3)[1]);
+                    drawCapsule(canvas, capsules.get(2), rects.get(3)[2]);
+                    drawCapsule(canvas, capsules.get(3), rects.get(3)[3]);
                     break;
             }
             canvas.restore();
         }
     }
 
-    private void drawOneCapsule(Canvas canvas, Capsule capsule) {
+    private void calculateRects(Canvas canvas) {
         Rect clipBounds = canvas.getClipBounds();
 
-        drawCapsule(canvas, capsule, clipBounds);
-    }
-
-    private void drawTwoCapsule(Canvas canvas, Capsule capsule1, Capsule capsule2) {
-        Rect clipBounds = canvas.getClipBounds();
-
-        int left = clipBounds.left;
-        int right = clipBounds.right;
-        int top = clipBounds.top;
-        int bottom = clipBounds.bottom;
-
-        int centerX = clipBounds.width() / 2;
-
-        Rect rect1 = new Rect(left, top, centerX, bottom);
-        Rect rect2 = new Rect(centerX, top, right, bottom);
-
-        drawCapsule(canvas, capsule1, rect1);
-        drawCapsule(canvas, capsule2, rect2);
-
-    }
-
-    private void drawThreeCapsule(Canvas canvas, Capsule capsule1, Capsule capsule2, Capsule capsule3) {
-        Rect clipBounds = canvas.getClipBounds();
+        // Draw one capsule
+        if (rects.get(0) == null) {
+            rects.put(0, new Rect[]{clipBounds});
+        }
 
         int left = clipBounds.left;
         int right = clipBounds.right;
@@ -136,40 +132,37 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         int centerX = clipBounds.width() / 2;
         int centerY = clipBounds.height() / 2;
 
-        Rect rect1 = new Rect(left, top, centerX, bottom);
-        Rect rect2 = new Rect(centerX, top, right, centerY);
-        Rect rect3 = new Rect(centerX, centerY, right, bottom);
+        // Draw two capsules
+        if (rects.get(1) == null) {
+            Rect rect1 = new Rect(left, top, centerX, bottom);
+            Rect rect2 = new Rect(centerX, top, right, bottom);
 
-        drawCapsule(canvas, capsule1, rect1);
-        drawCapsule(canvas, capsule2, rect2);
-        drawCapsule(canvas, capsule3, rect3);
-    }
+            rects.put(1, new Rect[]{rect1, rect2});
+        }
 
-    private void drawFourCapsule(Canvas canvas, Capsule capsule1, Capsule capsule2, Capsule capsule3, Capsule capsule4) {
-        Rect clipBounds = canvas.getClipBounds();
+        // Draw three capsules
+        if (rects.get(2) == null) {
+            Rect rect1 = new Rect(left, top, centerX, bottom);
+            Rect rect2 = new Rect(centerX, top, right, centerY);
+            Rect rect3 = new Rect(centerX, centerY, right, bottom);
 
-        int left = clipBounds.left;
-        int right = clipBounds.right;
-        int top = clipBounds.top;
-        int bottom = clipBounds.bottom;
+            rects.put(2, new Rect[]{rect1, rect2, rect3});
+        }
 
-        int centerX = clipBounds.width() / 2;
-        int centerY = clipBounds.height() / 2;
+        // Draw four capsules
+        if (rects.get(3) == null) {
+            Rect rect1 = new Rect(left, top, centerX, centerY);
+            Rect rect2 = new Rect(centerX, top, right, centerY);
+            Rect rect3 = new Rect(left, centerY, centerX, bottom);
+            Rect rect4 = new Rect(centerX, centerY, right, bottom);
 
-        Rect rect1 = new Rect(left, top, centerX, centerY);
-        Rect rect2 = new Rect(centerX, top, right, centerY);
-        Rect rect3 = new Rect(left, centerY, centerX, bottom);
-        Rect rect4 = new Rect(centerX, centerY, right, bottom);
-
-        drawCapsule(canvas, capsule1, rect1);
-        drawCapsule(canvas, capsule2, rect2);
-        drawCapsule(canvas, capsule3, rect3);
-        drawCapsule(canvas, capsule4, rect4);
+            rects.put(3, new Rect[]{rect1, rect2, rect3, rect4});
+        }
     }
 
     private void drawCapsule(Canvas canvas, Capsule capsule, Rect rect) {
-        if (capsule != null) {
-                capsule.boom(canvas, paint, rect);
+        if (canvas != null && capsule != null && rect != null) {
+            capsule.boom(canvas, paint, rect);
         }
     }
 
