@@ -10,6 +10,14 @@
 
 ImageCapsule is an abstract class that allows to load images in Thread.
 
+### Usage
+
+* Create your class that extends from **ImageUrlCapsule**
+* Implement Constructor matchig super(String url);
+* Implement method executeAsync(String url);
+* Use any async load images.
+* Once bitmap is loaded, use **setDownloadedBitmap(bitmap);** to display in DispenserView
+
 ``` java
 public class CustomUrlBitmapCapsule extends ImageUrlCapsule {
 
