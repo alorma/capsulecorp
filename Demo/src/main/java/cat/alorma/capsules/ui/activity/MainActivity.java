@@ -2,8 +2,10 @@ package cat.alorma.capsules.ui.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.SparseArray;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,9 +17,13 @@ import cat.alorma.capsules.ui.fragment.TextColorsFragment;
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
 
+    private SparseArray<Fragment> fragments;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
 
         if (getActionBar() != null) {
             getActionBar().setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -39,20 +45,19 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
-        switch (tab.getPosition()) {
-            case 0:
-                ft.replace(android.R.id.content, new ColorsFragment());
-                break;
-            case 1:
-                ft.replace(android.R.id.content, new TextColorsFragment());
-                break;
-            case 2:
-                ft.replace(android.R.id.content, new ImagesCapsulesFragment());
-                break;
-            case 3:
-                ft.replace(android.R.id.content, new ListCapsulesFragment());
-                break;
+        if (fragments == null) {
+            createFragments();
         }
+        ft.replace(android.R.id.content, fragments.get(tab.getPosition()));
+    }
+
+    private void createFragments() {
+        fragments = new SparseArray<Fragment>();
+
+        fragments.put(0, new ColorsFragment());
+        fragments.put(1, new TextColorsFragment());
+        fragments.put(2, new ImagesCapsulesFragment());
+        fragments.put(3, new ListCapsulesFragment());
     }
 
     @Override
