@@ -1,19 +1,20 @@
 apply plugin: 'maven'
 apply plugin: 'signing'
 
-def sonatypeRepositoryUrl
-if (isReleaseBuild()) {
-    println 'RELEASE BUILD'
-    sonatypeRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-} else {
-    println 'DEBUG BUILD'
-    sonatypeRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
-}
-
 afterEvaluate { project ->
     uploadArchives {
         repositories {
             mavenDeployer {
+
+                def sonatypeRepositoryUrl
+                if (isReleaseBuild()) {
+                    println 'RELEASE BUILD'
+                    sonatypeRepositoryUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+                } else {
+                    println 'DEBUG BUILD'
+                    sonatypeRepositoryUrl = "https://oss.sonatype.org/content/repositories/snapshots/"
+                }
+
                 beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
 
                 pom.artifactId = POM_ARTIFACT_ID

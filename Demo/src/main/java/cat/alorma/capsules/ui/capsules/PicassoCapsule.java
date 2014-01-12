@@ -8,7 +8,6 @@ import android.util.Log;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
-import cat.alorma.capsulecorp.library.R;
 import cat.alorma.capsulecorp.library.capsule.abs.ImageUrlCapsule;
 
 /**

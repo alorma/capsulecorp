@@ -9,6 +9,14 @@ android {
         targetSdkVersion 19
         versionName project.VERSION_NAME
         versionCode Integer.parseInt(project.VERSION_CODE)
+
+        def cmd = "git rev-parse --short HEAD"
+        def proc = cmd.execute()
+        ext.revision = proc.text.trim()
+
+        buildConfigField "String", "GIT_SHA", "\"" + gitSha() + "\""
+
+        buildConfigField "String", "BUILD_TIME", "\"" + buildTime() + "\""
     }
 }
 
