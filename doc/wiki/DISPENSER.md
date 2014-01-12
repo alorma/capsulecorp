@@ -32,11 +32,11 @@ DispenserView just admits postions from 0 to 3 (1 to 4).
 
 * **Single:** One capsule, square
 * **Two columns:** Two capsules, one column per capsule
-* **Column and squares: Three capsules
+* **Column and squares:** Three capsules
     * Position 0 in a column
     * Position 1 in right top square
     * Position 2 in right bottom square
-* **Squares: Four capsules
+* **Squares:** Four capsules
     * Position 0 in left top square
     * Position 1 in right top square
     * Position 2 in left bottom square
