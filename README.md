@@ -26,11 +26,6 @@ And, of course, a **mix of them**
 
 * Available soon in Google Play
 
-## Usage
-
-### DispenserView [(source)](https://github.com/alorma/capsulecorp/blob/master/Demo/src/main/res/layout/fragment_main.xml)
-
-![Screen](https://github.com/gabrielemariotti/cardslib/raw/master/demo/images/demo/birthday.png)
 
 LICENSE
 ===========
