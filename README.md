@@ -1,3 +1,25 @@
+# CapsuleCorp library
+
+**CapsuleCorp library** provides easy way to display images text and colors in a square view
+
+You can display **Colors**
+
+![Screen](https://raw2.github.com/alorma/capsulecorp/master/doc/art/screen_colors.png)
+
+**Texts**
+
+![Screen](https://raw2.github.com/alorma/capsulecorp/master/doc/art/screen_text.png)
+
+**Images**
+
+![Screen](https://raw2.github.com/alorma/capsulecorp/master/doc/art/screen_images.png)
+
+And, of course, a **mix of them**
+
+![Screen](https://raw2.github.com/alorma/capsulecorp/master/doc/art/screen_list.png)
+
+
+
 LICENSE
 ===========
 
