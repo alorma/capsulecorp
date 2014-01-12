@@ -7,7 +7,7 @@ import android.graphics.Rect;
 /**
  * Created by Bernat on 25/11/13.
  */
-public abstract class Capsule {
+public abstract class Capsule implements CapsuleDrawer{
 
     private CapsuleListener capsuleListener;
     private Canvas canvas;
@@ -18,6 +18,8 @@ public abstract class Capsule {
         this.canvas = canvas;
         this.paint = paint;
         this.rect = rect;
+
+        create(canvas, paint, rect);
     }
 
     public void setCapsuleListener(CapsuleListener capsuleListener) {

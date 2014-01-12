@@ -16,8 +16,7 @@ public abstract class BitmapCapsule extends Capsule {
     }
 
     @Override
-    public void boom(Canvas canvas,Paint paint, Rect rect) {
-        super.boom(canvas, paint, rect);
+    public void create(Canvas canvas,Paint paint, Rect rect) {
         Bitmap bitmap = getBitmap();
 
         if (bitmap != null && paint != null && rect != null) {

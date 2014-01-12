@@ -22,10 +22,13 @@ And, of course, a **mix of them**
 
 **Sample** application: The demo is a showcase of the functionality of the library.
 
-* [![Dropbox]](https://www.dropbox.com/s/1wtuw1gbj6uytgd/CapsuleCorp.apk)
+* [Dropbox](https://www.dropbox.com/s/1wtuw1gbj6uytgd/CapsuleCorp.apk)
 
 * Available soon in Google Play
 
+## USAGE
+
+* [Usage wiki:](https://github.com/alorma/capsulecorp/blob/master/doc/wiki/README.md) Code examples
 
 LICENSE
 ===========

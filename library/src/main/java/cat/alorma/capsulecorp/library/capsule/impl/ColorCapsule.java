@@ -18,8 +18,7 @@ public class ColorCapsule extends Capsule {
     }
 
     @Override
-    public void boom(Canvas canvas, Paint paint, Rect rect) {
-        super.boom(canvas, paint, rect);
+    public void create(Canvas canvas, Paint paint, Rect rect) {
         paint.setColor(this.background);
         paint.setStyle(Paint.Style.FILL);
         canvas.drawRect(rect, paint);
