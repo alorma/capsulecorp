@@ -19,10 +19,9 @@
             android:max="3" />
     </LinearLayout>
 
-    <view
+    <cat.alorma.capsulecorp.library.DispenserView
         android:layout_width="300dp"
         android:layout_height="100dp"
-        class="cat.alorma.capsulecorp.library.DispenserView"
         android:id="@+id/dispenserView"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />

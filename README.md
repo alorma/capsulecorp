@@ -18,7 +18,19 @@ And, of course, a **mix of them**
 
 ![Screen](https://raw2.github.com/alorma/capsulecorp/master/doc/art/screen_list.png)
 
+## Demo app
 
+**Sample** application: The demo is a showcase of the functionality of the library.
+
+* [![Dropbox]](https://www.dropbox.com/s/1wtuw1gbj6uytgd/CapsuleCorp.apk)
+
+* Available soon in Google Play
+
+## Usage
+
+### DispenserView [(source)](https://github.com/alorma/capsulecorp/blob/master/Demo/src/main/res/layout/fragment_main.xml)
+
+![Screen](https://github.com/gabrielemariotti/cardslib/raw/master/demo/images/demo/birthday.png)
 
 LICENSE
 ===========
