@@ -10,3 +10,5 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 ```
+
+DispenserView is a square view, it takes the big size  (Width or Height)
