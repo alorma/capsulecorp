@@ -31,7 +31,7 @@ And, of course, a **mix of them**
 Import library in your `build.gradle`.
 
     dependencies {
-        compile 'com.github.gabrielemariotti.cards:library:1.2.0'
+        compile 'com.github.alorma:capsulecorp:1.0.0'
     }
 
 
