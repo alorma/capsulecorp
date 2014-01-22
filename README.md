@@ -34,6 +34,8 @@ And, of course, a **mix of them**
     dependencies {
         compile 'com.github.alorma:capsulecorp:1.0.0'
     }
+    
+    
 
 * [Usage wiki:](https://github.com/alorma/capsulecorp/blob/master/doc/wiki/README.md) Code examples
 
