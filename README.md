@@ -28,14 +28,12 @@ And, of course, a **mix of them**
 
 ## USAGE
 
-* Import library in your `build.gradle`.
-
+Import library in your `build.gradle`.
 
     dependencies {
-        compile 'com.github.alorma:capsulecorp:1.0.0'
+        compile 'com.github.gabrielemariotti.cards:library:1.2.0'
     }
-    
-    
+
 
 * [Usage wiki:](https://github.com/alorma/capsulecorp/blob/master/doc/wiki/README.md) Code examples
 
