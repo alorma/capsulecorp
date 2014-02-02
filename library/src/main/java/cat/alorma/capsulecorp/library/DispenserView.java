@@ -31,6 +31,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     private SparseArray<Rect[]> rects;
     private Paint paint;
     private int maskResource = 0;
+    private boolean mask = false;
 
 
     public DispenserView(Context context) {
@@ -87,6 +88,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     public void setMaskResource(int maskResource) {
         this.maskResource = maskResource;
+        postInvalidate();
     }
 
     public void addCapsule(int capsulePosition, Capsule capsule) {
@@ -101,6 +103,10 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         }
     }
 
+    public void setMaskEnabled(boolean mask){
+        this.mask = mask;
+        postInvalidate();
+    }
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
@@ -144,9 +150,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
             Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-            if(maskResource != 0){
-                BitmapFactory.Options opt = new BitmapFactory.Options();
-                opt.inSampleSize = 520;
+            if(maskResource != 0 && this.mask){
                 mask = BitmapFactory.decodeResource(getResources(), maskResource);
                 mask = Bitmap.createScaledBitmap(mask,original.getWidth(),original.getHeight(),true);
             }
