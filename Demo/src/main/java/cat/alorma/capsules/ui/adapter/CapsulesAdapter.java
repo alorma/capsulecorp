@@ -80,6 +80,7 @@ public class CapsulesAdapter extends ArrayAdapter<Data> {
             }
             vh.dispenserView.invalidate();
             vh.dispenserView.setMaskResource(R.drawable.mask);
+            vh.dispenserView.setMaskEnabled(position % 2 != 0 ? true : false);
         }
 
         return vh.rootView;
