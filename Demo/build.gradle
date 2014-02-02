@@ -18,6 +18,6 @@ android {
 
 dependencies {
     compile project(':library')
-    compile 'com.squareup.picasso:picasso:2.1.1@jar'
+    compile 'com.squareup.picasso:picasso:2.2.0'
     compile 'com.googlecode.android-query:android-query:0.25.9@jar'
 }
