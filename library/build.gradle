@@ -14,5 +14,3 @@ android {
 
 dependencies {
 }
-
-apply from: '../maven_push.gradle'

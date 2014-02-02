@@ -3,7 +3,7 @@ package cat.alorma.capsules.ui.capsules;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
+
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
