@@ -16,7 +16,7 @@ import cat.alorma.capsules.R;
  */
 public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBarChangeListener {
 
-    private DispenserView dispenserView;
+    protected DispenserView dispenserView;
 
     private Capsule capsule1;
     private Capsule capsule2;
