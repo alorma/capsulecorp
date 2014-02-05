@@ -46,23 +46,6 @@ public class ListCapsulesFragment extends ListFragment {
         setListAdapter(adapter);
     }
 
-    private List<Capsule> getCapsules() {
-        Random random = new Random();
-
-        switch (random.nextInt(5)) {
-            case 0:
-            case 1:
-                return get1Capsules();
-            case 2:
-                return get2Capsules();
-            case 3:
-                return get3Capsules();
-            case 4:
-                return get4Capsules();
-        }
-        return null;
-    }
-
     private List<Capsule> get1Capsules() {
         List<Capsule> capsules = new ArrayList<Capsule>();
         capsules.add(new TextCapsule("Helena", Color.parseColor("#000000"), Color.parseColor("#bdc3c7")));

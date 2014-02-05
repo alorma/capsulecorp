@@ -78,9 +78,6 @@ public class CapsulesAdapter extends ArrayAdapter<Data> {
             for (int i = 0; i < (data.getCapsules().size() <= 4 ? data.getCapsules().size() : 4); i++) {
                 vh.dispenserView.addCapsule(i, data.getCapsules().get(i));
             }
-            vh.dispenserView.invalidate();
-            vh.dispenserView.setMaskResource(R.drawable.mask);
-            vh.dispenserView.setMaskEnabled(position % 2 != 0 ? true : false);
         }
 
         return vh.rootView;

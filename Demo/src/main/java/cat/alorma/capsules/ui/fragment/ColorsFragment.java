@@ -11,8 +11,6 @@ import cat.alorma.capsules.R;
 public class ColorsFragment extends BaseFragment {
     @Override
     protected void generateCapsules() {
-        dispenserView.setMaskResource(R.drawable.mask);
-        dispenserView.setMaskEnabled(true);
         setCapsule1(new ColorCapsule(Color.parseColor("#e67e22")));
         setCapsule2(new ColorCapsule(Color.parseColor("#9b59b6")));
         setCapsule3(new ColorCapsule(Color.parseColor("#bdc3c7")));

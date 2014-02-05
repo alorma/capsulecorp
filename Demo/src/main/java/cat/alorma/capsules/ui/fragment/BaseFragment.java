@@ -43,7 +43,7 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
         seekBar.setOnSeekBarChangeListener(this);
         seekBar.setMax(3);
 
-       seekBar.setProgress(2);
+        seekBar.setProgress(2);
     }
 
     @Override
