@@ -30,7 +30,6 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
             List<String> titles = new ArrayList<String>();
             titles.add("Colors");
             titles.add("Texts");
-            titles.add("Mask");
             titles.add("Images");
             titles.add("List");
 
@@ -56,9 +55,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
 
         fragments.put(0, new ColorsFragment());
         fragments.put(1, new TextColorsFragment());
-        fragments.put(2, new MaskFragment());
-        fragments.put(3, new ImagesCapsulesFragment());
-        fragments.put(4, new ListCapsulesFragment());
+        fragments.put(2, new ImagesCapsulesFragment());
+        fragments.put(3, new ListCapsulesFragment());
     }
 
     @Override
