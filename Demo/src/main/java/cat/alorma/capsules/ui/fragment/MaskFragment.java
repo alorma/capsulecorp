@@ -14,7 +14,5 @@ public class MaskFragment extends ColorsFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        dispenserView.setMaskResource(R.drawable.mask);
-        dispenserView.setMaskEnabled(true);
     }
 }

@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <view
@@ -9,12 +10,12 @@
         android:layout_height="48dp"
         class="cat.alorma.capsulecorp.library.DispenserView"
         android:id="@+id/dispenserView"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        custom:mask_enabled="true"
+        custom:mask="@drawable/mask"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/textView"/>
+        android:id="@+id/textView" />
 
 </LinearLayout>

@@ -1,7 +1,6 @@
 package cat.alorma.capsulecorp.library;
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
@@ -15,7 +14,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
 import android.view.View;
-import android.widget.ImageView;
 
 import java.util.List;
 
@@ -31,8 +29,8 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     private SparseArray<Capsule> capsules;
     private SparseArray<Rect[]> rects;
     private Paint paint;
-    private int maskResource = 0;
-    private boolean mask = false;
+    private int maskResource = -1;
+    private boolean maskEnabled = false;
     private Bitmap result;
     private Bitmap original;
     private int background;
@@ -84,6 +82,14 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     private void getAttributes(AttributeSet attrs) {
         background = attrs.getAttributeResourceValue("http://schemas.android.com/apk/res/android", "background", -1);
+
+        for (int i = 0; i < attrs.getAttributeCount(); i++) {
+            if ("mask_enabled".equalsIgnoreCase(attrs.getAttributeName(i))) {
+                maskEnabled = Boolean.parseBoolean(attrs.getAttributeValue(i));
+            } else if ("mask".equalsIgnoreCase(attrs.getAttributeName(i))) {
+                maskResource = attrs.getAttributeResourceValue(i, -1);
+            }
+        }
     }
 
     public int getMaskResource() {
@@ -108,7 +114,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     }
 
     public void setMaskEnabled(boolean mask) {
-        this.mask = mask;
+        this.maskEnabled = mask;
         postInvalidate();
     }
 
@@ -117,19 +123,19 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         super.onDraw(canvas);
 
         if (result == null && original == null)
-        if (background != -1) {
-            int[] colors = new int[canvas.getWidth() * canvas.getHeight()];
-            for (int i = 0; i < canvas.getWidth() * canvas.getHeight(); i++) {
-                colors[i] = background;
+            if (background != -1) {
+                int[] colors = new int[canvas.getWidth() * canvas.getHeight()];
+                for (int i = 0; i < canvas.getWidth() * canvas.getHeight(); i++) {
+                    colors[i] = background;
+                }
+                result = Bitmap.createBitmap(colors, canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
+                original = Bitmap.createBitmap(colors, canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
+                result = result.copy(Bitmap.Config.ARGB_8888, true);
+                original = original.copy(Bitmap.Config.ARGB_8888, true);
+            } else {
+                result = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
+                original = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
             }
-            result = Bitmap.createBitmap(colors, canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
-            original = Bitmap.createBitmap(colors, canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
-            result = result.copy(Bitmap.Config.ARGB_8888, true);
-            original = original.copy(Bitmap.Config.ARGB_8888, true);
-        } else {
-            result = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
-            original = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
-        }
 
         canvas.save();
         calculateRects(canvas);
@@ -164,7 +170,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
             Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-            if (maskResource != 0 && this.mask) {
+            if (this.maskEnabled && maskResource != -1) {
                 mask = BitmapFactory.decodeResource(getResources(), maskResource);
                 mask = Bitmap.createScaledBitmap(mask, original.getWidth(), original.getHeight(), true);
             }

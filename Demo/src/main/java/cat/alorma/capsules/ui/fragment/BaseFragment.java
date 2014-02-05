@@ -36,6 +36,7 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
         super.onViewCreated(view, savedInstanceState);
 
         dispenserView = (DispenserView) view.findViewById(R.id.dispenserView);
+        dispenserView.setMaskResource(R.drawable.mask);
 
         view.findViewById(R.id.padding0).setOnClickListener(this);
         view.findViewById(R.id.padding10).setOnClickListener(this);
