@@ -14,7 +14,7 @@ import cat.alorma.capsules.R;
 /**
  * Created by Bernat on 25/11/13.
  */
-public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBarChangeListener {
+public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
 
     protected DispenserView dispenserView;
 
@@ -36,6 +36,11 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
         super.onViewCreated(view, savedInstanceState);
 
         dispenserView = (DispenserView) view.findViewById(R.id.dispenserView);
+
+        view.findViewById(R.id.padding0).setOnClickListener(this);
+        view.findViewById(R.id.padding10).setOnClickListener(this);
+        view.findViewById(R.id.padding50).setOnClickListener(this);
+        view.findViewById(R.id.padding100).setOnClickListener(this);
 
         generateCapsules();
 
@@ -108,5 +113,25 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
 
     public void setCapsule4(Capsule capsule4) {
         this.capsule4 = capsule4;
+    }
+
+    @Override
+    public void onClick(View v) {
+        int padding = 0;
+        switch (v.getId()) {
+            case R.id.padding0:
+                padding = 0;
+                break;
+            case R.id.padding10:
+                padding = 10;
+                break;
+            case R.id.padding50:
+                padding = 50;
+                break;
+            case R.id.padding100:
+                padding = 100;
+                break;
+        }
+        dispenserView.setPadding(padding);
     }
 }

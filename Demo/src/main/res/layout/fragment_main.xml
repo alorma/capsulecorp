@@ -21,8 +21,51 @@
 
     <cat.alorma.capsulecorp.library.DispenserView
         android:layout_width="300dp"
-        android:layout_height="100dp"
+        android:layout_height="300dp"
         android:id="@+id/dispenserView"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0dp"
+        android:id="@+id/padding0"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Padding"
+        android:id="@+id/textView"
+        android:layout_above="@+id/padding0"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10dp"
+        android:id="@+id/padding10"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/padding0" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50dp"
+        android:id="@+id/padding50"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/padding10" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100dp"
+        android:id="@+id/padding100"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/padding50" />
 </RelativeLayout>
