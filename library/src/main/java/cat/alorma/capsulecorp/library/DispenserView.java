@@ -35,6 +35,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     private boolean mask = false;
     private Bitmap result;
     private Bitmap original;
+    private int background;
 
 
     public DispenserView(Context context) {
@@ -82,7 +83,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     }
 
     private void getAttributes(AttributeSet attrs) {
-
+        background = attrs.getAttributeResourceValue("http://schemas.android.com/apk/res/android", "background", -1);
     }
 
     public int getMaskResource() {
@@ -115,8 +116,20 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        result = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
-        original = Bitmap.createBitmap(this.getWidth(), this.getHeight(), Bitmap.Config.ARGB_8888);
+        if (result == null && original == null)
+        if (background != -1) {
+            int[] colors = new int[canvas.getWidth() * canvas.getHeight()];
+            for (int i = 0; i < canvas.getWidth() * canvas.getHeight(); i++) {
+                colors[i] = background;
+            }
+            result = Bitmap.createBitmap(colors, canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
+            original = Bitmap.createBitmap(colors, canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
+            result = result.copy(Bitmap.Config.ARGB_8888, true);
+            original = original.copy(Bitmap.Config.ARGB_8888, true);
+        } else {
+            result = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
+            original = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
+        }
 
         canvas.save();
         calculateRects(canvas);
@@ -169,10 +182,8 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
             canvas.restore();
         }
-        mask = null;
         result = null;
         original = null;
-
     }
 
     private void calculateRects(Canvas canvas) {
