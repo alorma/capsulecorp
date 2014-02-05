@@ -191,13 +191,18 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
             rects = new SparseArray<Rect[]>(4);
             Rect clipBounds = canvas.getClipBounds();
 
-            clipBounds.left = getPaddingLeft();
-            clipBounds.right = clipBounds.right - getPaddingRight();
-            clipBounds.top = getPaddingTop();
-            clipBounds.bottom = clipBounds.bottom - getPaddingTop();
+            int paddingLeft = getPaddingLeft() < clipBounds.width() / 2 ? getPaddingLeft() : 0;
+            int paddingRight = getPaddingRight() < clipBounds.width() / 2 ? getPaddingRight() : 0;
+            int paddingTop = getPaddingTop() < clipBounds.height() / 2 ? getPaddingTop() : 0;
+            int paddingBottom = getPaddingBottom() < clipBounds.height() / 2 ? getPaddingBottom() : 0;
 
-            int centerX = (clipBounds.width() / 2) + getPaddingLeft();
-            int centerY = (clipBounds.height() / 2) + getPaddingTop();
+            clipBounds.left = paddingLeft;
+            clipBounds.right = clipBounds.right - paddingRight;
+            clipBounds.top = paddingTop;
+            clipBounds.bottom = clipBounds.bottom - paddingBottom;
+
+            int centerX = (clipBounds.width() / 2) + paddingLeft;
+            int centerY = (clipBounds.height() / 2) + paddingTop;
 
             // Draw one capsule
             if (rects.get(0) == null) {

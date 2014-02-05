@@ -23,7 +23,8 @@
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:background="@android:color/darker_gray"
-        android:padding="16dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
         android:id="@+id/dispenserView"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
