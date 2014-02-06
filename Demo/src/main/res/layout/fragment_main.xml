@@ -23,13 +23,13 @@
     <cat.alorma.capsulecorp.library.DispenserView
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:background="#EAEAEA"
-        android:padding="15dp"
+        android:background="@android:color/holo_blue_light"
+        android:padding="16dp"
         android:id="@+id/dispenserView"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        custom:divider_color="@android:color/holo_blue_light"
-        custom:divider_size="0"/>
+        custom:divider_color="@color/EA"
+        custom:divider_size="8dp"/>
 
     <Button
         android:layout_width="wrap_content"

@@ -130,7 +130,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         this.maskEnabled = mask;
         postInvalidate();
     }
-    
+
     public void setMaskResource(int maskResource) {
         this.maskResource = maskResource;
         postInvalidate();
@@ -202,6 +202,12 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
                     drawCapsule(originalImage, capsules.get(3), rects.get(3)[3]);
                     break;
             }
+        }
+    }
+
+    private void drawCapsule(Canvas canvas, Capsule capsule, Rect rect) {
+        if (canvas != null && capsule != null && rect != null) {
+            capsule.boom(canvas, paint, rect);
         }
     }
 
@@ -291,12 +297,6 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
             }
         }
         return clipBounds;
-    }
-
-    private void drawCapsule(Canvas canvas, Capsule capsule, Rect rect) {
-        if (canvas != null && capsule != null && rect != null) {
-            capsule.boom(canvas, paint, rect);
-        }
     }
 
     public void clear() {
