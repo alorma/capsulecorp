@@ -152,14 +152,15 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
+        canvas.save();
+
+        Rect bounds = calculateRects(canvas);
+
         if (result == null && original == null) {
             result = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
             original = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
         }
 
-        canvas.save();
-
-        Rect bounds = calculateRects(canvas);
         drawDividers(canvas, bounds);
         drawCapsules(original);
         drawMask(canvas);

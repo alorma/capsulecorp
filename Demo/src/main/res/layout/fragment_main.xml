@@ -29,7 +29,9 @@
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
         custom:divider_color="@color/EA"
-        custom:divider_size="8dp"/>
+        custom:divider_size="8dp"
+        custom:mask="@drawable/mask"
+        custom:mask_enabled="true"/>
 
     <Button
         android:layout_width="wrap_content"
