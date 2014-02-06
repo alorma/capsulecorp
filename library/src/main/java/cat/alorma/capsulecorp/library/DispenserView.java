@@ -35,6 +35,9 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     private Bitmap result;
     private Bitmap original;
     private int background;
+    private int divider_color;
+    private int divider_size;
+    private float divider_size_float;
 
 
     public DispenserView(Context context) {
@@ -83,12 +86,21 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     private void getAttributes(AttributeSet attrs) {
 
-        if (getContext() != null) {
-        TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.dispenserattrs);
+        if (getContext() != null && getContext().getTheme() != null) {
+            TypedArray a = getContext().getTheme().obtainStyledAttributes(attrs, R.styleable.dispenserattrs, 0, 0);
 
             if (a != null) {
-                maskEnabled = a.getBoolean(R.styleable.dispenserattrs_mask_enabled, false);
-                maskResource = a.getResourceId(R.styleable.dispenserattrs_mask, -1);
+                try {
+                    maskEnabled = a.getBoolean(R.styleable.dispenserattrs_mask_enabled, false);
+                    maskResource = a.getResourceId(R.styleable.dispenserattrs_mask, -1);
+                    divider_color = a.getInt(R.styleable.dispenserattrs_divider_color, -1);
+                    divider_size = Utils.dividerSize(getContext(), a);
+                    if (divider_size != -1) {
+                        Log.i("DIV_SIZE", "SIZE: " + divider_size);
+                    }
+                } finally {
+                    a.recycle();
+                }
             }
         }
     }

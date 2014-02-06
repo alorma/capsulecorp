@@ -3,5 +3,8 @@
     <declare-styleable name="dispenserattrs">
         <attr name="mask" format="reference"/>
         <attr name="mask_enabled" format="boolean"/>
+        <attr name="divider_enabled" format="boolean"/>
+        <attr name="divider_size" format="integer|dimension|reference"/>
+        <attr name="divider_color" format="reference"/>
     </declare-styleable>
 </resources>
