@@ -1,4 +1,4 @@
-package cat.alorma.capsulecorp.library.capsulestype;
+package cat.alorma.capsulecorp.library.type;
 
 import android.graphics.Rect;
 
@@ -12,11 +12,11 @@ public class TypeTwo extends Type {
     }
 
     @Override
-    public void calculateRects(Rect clipBounds, int[] dividers) {
+    public Rect[] calculateRects(Rect clipBounds, int[] dividers) {
         Rect rect1 = new Rect(clipBounds.left, clipBounds.top, dividers[0], clipBounds.bottom);
         Rect rect2 = new Rect(dividers[1], clipBounds.top, clipBounds.right, clipBounds.bottom);
 
-        setRects(new Rect[] {rect1, rect2});
+        return new Rect[] {rect1, rect2};
     }
 
 

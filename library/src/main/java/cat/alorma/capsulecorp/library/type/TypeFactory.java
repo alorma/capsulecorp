@@ -1,11 +1,7 @@
-package cat.alorma.capsulecorp.library.capsulestype;
+package cat.alorma.capsulecorp.library.type;
 
 import android.graphics.Rect;
 import android.view.View;
-
-import java.util.ArrayList;
-
-import cat.alorma.capsulecorp.library.DispenserView;
 
 /**
  * Created by Bernat on 7/02/14.

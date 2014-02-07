@@ -1,4 +1,4 @@
-package cat.alorma.capsulecorp.library.capsulestype;
+package cat.alorma.capsulecorp.library.type;
 
 import android.graphics.Rect;
 

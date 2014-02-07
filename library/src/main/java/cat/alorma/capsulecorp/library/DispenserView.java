@@ -19,8 +19,8 @@ import java.util.List;
 
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
 import cat.alorma.capsulecorp.library.capsule.impl.TextCapsule;
-import cat.alorma.capsulecorp.library.capsulestype.TypeFactory;
-import cat.alorma.capsulecorp.library.capsulestype.Type;
+import cat.alorma.capsulecorp.library.type.TypeFactory;
+import cat.alorma.capsulecorp.library.type.Type;
 
 /**
  * Created by Bernat on 25/11/13.
@@ -29,7 +29,6 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     private static final int MAX_CAPSULES = 4;
     private ArrayList<Capsule> capsules;
-    private ArrayList<Type> types;
     private Type concretType;
     private Paint paint;
     private int maskResource = -1;
@@ -103,8 +102,10 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         }
     }
 
-    public Type getConcretType() {
-        return concretType;
+    private void getConcretType() {
+        concretType = concretType != null
+                ? concretType
+                : TypeFactory.newInstance(this, capsules.size(), divider_size);
     }
 
     public void setConcretType(Type concretType) {
@@ -122,7 +123,6 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     public void setDivider_size(int divider_size) {
         this.divider_size = divider_size;
-        types = null;
         postInvalidate();
     }
 
@@ -132,7 +132,6 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     public void setDivider_color(int divider_color) {
         this.divider_color = divider_color;
-        types = null;
         postInvalidate();
     }
 
@@ -169,7 +168,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
         canvas.save();
 
-        concretType = concretType != null ? concretType : TypeFactory.newInstance(this, capsules.size(), divider_size);
+        getConcretType();
 
         Rect bounds = getBoundPaint(canvas);
         drawDividers(canvas, bounds);
@@ -221,8 +220,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
             int size = capsules.size() <= MAX_CAPSULES ? capsules.size() : MAX_CAPSULES;
             for (int i = 0; i < size; i++) {
                 Capsule capsule = capsules.get(i);
-                Type type = concretType != null ? concretType : types.get(capsules.size() - 1);
-                Rect[] rects = type.getRects();
+                Rect[] rects = concretType.getRects();
                 drawCapsule(originalImage, capsule, rects[i]);
             }
         }
@@ -261,7 +259,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     public void clear() {
         capsules.clear();
-        types = null;
+        concretType = null;
         postInvalidate();
     }
 
@@ -273,7 +271,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     @Override
     public void setPadding(int left, int top, int right, int bottom) {
         super.setPadding(left, top, right, bottom);
-        types = null;
+        concretType = null;
         invalidate();
     }
 
