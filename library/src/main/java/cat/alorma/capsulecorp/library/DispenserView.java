@@ -12,14 +12,15 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.util.SparseArray;
 import android.view.View;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
 import cat.alorma.capsulecorp.library.capsule.impl.TextCapsule;
+import cat.alorma.capsulecorp.library.capsulestype.TypeFactory;
+import cat.alorma.capsulecorp.library.capsulestype.Type;
 
 /**
  * Created by Bernat on 25/11/13.
@@ -27,8 +28,9 @@ import cat.alorma.capsulecorp.library.capsule.impl.TextCapsule;
 public class DispenserView extends View implements Capsule.CapsuleListener {
 
     private static final int MAX_CAPSULES = 4;
-    private SparseArray<Capsule> capsules;
-    private SparseArray<Rect[]> rects;
+    private ArrayList<Capsule> capsules;
+    private ArrayList<Type> types;
+    private Type concretType;
     private Paint paint;
     private int maskResource = -1;
     private boolean maskEnabled = false;
@@ -52,14 +54,6 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         init(attrs);
     }
 
-    @Override
-    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int max = Math.max(widthMeasureSpec, heightMeasureSpec);
-        super.onMeasure(max, max);
-        setMeasuredDimension(max, max);
-        rects = null;
-    }
-
     private void init(AttributeSet attrs) {
         init(attrs, null);
     }
@@ -67,18 +61,25 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     public void init(AttributeSet attrs, List<Capsule> capsulesList) {
         getAttributes(attrs);
         isInEditMode();
-        capsules = new SparseArray<Capsule>();
+        capsules = new ArrayList<Capsule>();
         paint = new Paint();
 
         if (capsulesList != null) {
             for (int i = 0; i < (capsulesList.size() <= MAX_CAPSULES ? capsulesList.size() : MAX_CAPSULES); i++) {
-                addCapsule(i, capsulesList.get(i));
+                addCapsule(capsulesList.get(i));
             }
         } else {
             int black = Color.parseColor("#000000");
             int white = Color.parseColor("#FFFFFF");
-            addCapsule(0, new TextCapsule("C", white, black));
+            addCapsule(new TextCapsule("C", white, black));
         }
+    }
+
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        int max = Math.max(widthMeasureSpec, heightMeasureSpec);
+        super.onMeasure(max, max);
+        setMeasuredDimension(max, max);
     }
 
     private void getAttributes(AttributeSet attrs) {
@@ -102,6 +103,15 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         }
     }
 
+    public Type getConcretType() {
+        return concretType;
+    }
+
+    public void setConcretType(Type concretType) {
+        this.concretType = concretType;
+
+    }
+
     public int getMaskResource() {
         return maskResource;
     }
@@ -112,7 +122,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     public void setDivider_size(int divider_size) {
         this.divider_size = divider_size;
-        rects = null;
+        types = null;
         postInvalidate();
     }
 
@@ -122,7 +132,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     public void setDivider_color(int divider_color) {
         this.divider_color = divider_color;
-        rects = null;
+        types = null;
         postInvalidate();
     }
 
@@ -136,14 +146,14 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         postInvalidate();
     }
 
-    public void addCapsule(int capsulePosition, Capsule capsule) {
+    public void addCapsule(Capsule capsule) {
         if (capsules == null) {
-            capsules = new SparseArray<Capsule>();
+            capsules = new ArrayList<Capsule>();
         }
         if (capsule != null) {
-            if (capsulePosition >= 0 && capsulePosition <= MAX_CAPSULES) {
+            if (capsules.size() <= MAX_CAPSULES) {
                 capsule.setCapsuleListener(this);
-                capsules.put(capsulePosition, capsule);
+                capsules.add(capsule);
             }
         }
     }
@@ -152,23 +162,48 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        canvas.save();
-
-        Rect bounds = calculateRects(canvas);
-
         if (result == null && original == null) {
             result = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
             original = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
         }
 
+        canvas.save();
+
+        concretType = concretType != null ? concretType : TypeFactory.newInstance(this, capsules.size(), divider_size);
+
+        Rect bounds = getBoundPaint(canvas);
         drawDividers(canvas, bounds);
         drawCapsules(original);
-        drawMask(canvas);
+        drawMask(canvas, bounds);
 
         canvas.restore();
 
         result = null;
         original = null;
+    }
+
+    private Rect getBoundPaint(Canvas canvas) {
+        Rect clipBounds = canvas.getClipBounds();
+
+        Rect padding = getBoundPadding(canvas);
+
+        clipBounds.left = padding.left;
+        clipBounds.right = clipBounds.right - padding.right;
+        clipBounds.top = padding.top;
+        clipBounds.bottom = clipBounds.bottom - padding.bottom;
+
+        return clipBounds;
+    }
+
+    private Rect getBoundPadding(Canvas canvas) {
+        Rect clipBounds = canvas.getClipBounds();
+        int paddingLeft = getPaddingLeft() < clipBounds.width() / 2 ? getPaddingLeft() : 0;
+        int paddingRight = getPaddingRight() < clipBounds.width() / 2 ? getPaddingRight() : 0;
+        int paddingTop = getPaddingTop() < clipBounds.height() / 2 ? getPaddingTop() : 0;
+        int paddingBottom = getPaddingBottom() < clipBounds.height() / 2 ? getPaddingBottom() : 0;
+
+        Rect rect = new Rect(paddingLeft, paddingTop, paddingRight, paddingBottom);
+        return rect;
     }
 
     private void drawDividers(Canvas canvas, Rect bounds) {
@@ -183,25 +218,12 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     private void drawCapsules(Bitmap original) {
         Canvas originalImage = new Canvas(original);
         if (capsules != null && capsules.size() > 0) {
-            switch (capsules.size()) {
-                case 1:
-                    drawCapsule(originalImage, capsules.get(0), rects.get(0)[0]);
-                    break;
-                case 2:
-                    drawCapsule(originalImage, capsules.get(0), rects.get(1)[0]);
-                    drawCapsule(originalImage, capsules.get(1), rects.get(1)[1]);
-                    break;
-                case 3:
-                    drawCapsule(originalImage, capsules.get(0), rects.get(2)[0]);
-                    drawCapsule(originalImage, capsules.get(1), rects.get(2)[1]);
-                    drawCapsule(originalImage, capsules.get(2), rects.get(2)[2]);
-                    break;
-                case 4:
-                    drawCapsule(originalImage, capsules.get(0), rects.get(3)[0]);
-                    drawCapsule(originalImage, capsules.get(1), rects.get(3)[1]);
-                    drawCapsule(originalImage, capsules.get(2), rects.get(3)[2]);
-                    drawCapsule(originalImage, capsules.get(3), rects.get(3)[3]);
-                    break;
+            int size = capsules.size() <= MAX_CAPSULES ? capsules.size() : MAX_CAPSULES;
+            for (int i = 0; i < size; i++) {
+                Capsule capsule = capsules.get(i);
+                Type type = concretType != null ? concretType : types.get(capsules.size() - 1);
+                Rect[] rects = type.getRects();
+                drawCapsule(originalImage, capsule, rects[i]);
             }
         }
     }
@@ -212,7 +234,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         }
     }
 
-    private void drawMask(Canvas canvas) {
+    private void drawMask(Canvas canvas, Rect bounds) {
         Bitmap mask = null;
         Canvas mCanvas = new Canvas(result);
 
@@ -220,13 +242,15 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
         if (this.maskEnabled && maskResource != -1) {
             mask = BitmapFactory.decodeResource(getResources(), maskResource);
-            mask = Bitmap.createScaledBitmap(mask, original.getWidth(), original.getHeight(), true);
+            mask = Bitmap.createScaledBitmap(mask, bounds.width(), bounds.height(), true);
+            // mask.eraseColor(Color.TRANSPARENT);
         }
 
         if (mask != null) {
+            Rect padding = getBoundPadding(canvas);
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
             mCanvas.drawBitmap(original, 0, 0, null);
-            mCanvas.drawBitmap(mask, 0, 0, paint);
+            mCanvas.drawBitmap(mask, padding.left, padding.top, paint);
             paint.setXfermode(null);
         } else {
             mCanvas.drawBitmap(original, 0, 0, paint);
@@ -235,74 +259,9 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         canvas.drawBitmap(result, new Matrix(), new Paint());
     }
 
-    private Rect calculateRects(Canvas canvas) {
-        Rect clipBounds = canvas.getClipBounds();
-        if (rects == null) {
-            rects = new SparseArray<Rect[]>(4);
-
-            int paddingLeft = getPaddingLeft() < clipBounds.width() / 2 ? getPaddingLeft() : 0;
-            int paddingRight = getPaddingRight() < clipBounds.width() / 2 ? getPaddingRight() : 0;
-            int paddingTop = getPaddingTop() < clipBounds.height() / 2 ? getPaddingTop() : 0;
-            int paddingBottom = getPaddingBottom() < clipBounds.height() / 2 ? getPaddingBottom() : 0;
-
-            clipBounds.left = paddingLeft;
-            clipBounds.right = clipBounds.right - paddingRight;
-            clipBounds.top = paddingTop;
-            clipBounds.bottom = clipBounds.bottom - paddingBottom;
-
-            int centerX = (clipBounds.width() / 2) + paddingLeft;
-            int centerY = (clipBounds.height() / 2) + paddingTop;
-
-            int centerXL = centerX;
-            int centerXR = centerX;
-            int centerYT = centerY;
-            int centerYB = centerY;
-
-            if (divider_size != -1) {
-                centerXL = centerXL - (divider_size / 2);
-                centerXR = centerXR + (divider_size / 2);
-                centerYT = centerYT - (divider_size / 2);
-                centerYB = centerYB + (divider_size / 2);
-            }
-
-            // Draw one capsule
-            if (rects.get(0) == null) {
-                rects.put(0, new Rect[]{clipBounds});
-            }
-
-            // Draw two capsules
-            if (rects.get(1) == null) {
-                Rect rect1 = new Rect(clipBounds.left, clipBounds.top, centerXL, clipBounds.bottom);
-                Rect rect2 = new Rect(centerXR, clipBounds.top, clipBounds.right, clipBounds.bottom);
-
-                rects.put(1, new Rect[]{rect1, rect2});
-            }
-
-            // Draw three capsules
-            if (rects.get(2) == null) {
-                Rect rect1 = new Rect(clipBounds.left, clipBounds.top, centerXL, clipBounds.bottom);
-                Rect rect2 = new Rect(centerXR, clipBounds.top, clipBounds.right, centerYT);
-                Rect rect3 = new Rect(centerXR, centerYB, clipBounds.right, clipBounds.bottom);
-
-                rects.put(2, new Rect[]{rect1, rect2, rect3});
-            }
-
-            // Draw four capsules
-            if (rects.get(3) == null) {
-                Rect rect1 = new Rect(clipBounds.left, clipBounds.top, centerXL, centerYT);
-                Rect rect2 = new Rect(centerXR, clipBounds.top, clipBounds.right, centerYT);
-                Rect rect3 = new Rect(clipBounds.left, centerYB, centerXL, clipBounds.bottom);
-                Rect rect4 = new Rect(centerXR, centerYB, clipBounds.right, clipBounds.bottom);
-
-                rects.put(3, new Rect[]{rect1, rect2, rect3, rect4});
-            }
-        }
-        return clipBounds;
-    }
-
     public void clear() {
         capsules.clear();
-        rects = null;
+        types = null;
         postInvalidate();
     }
 
@@ -314,11 +273,12 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     @Override
     public void setPadding(int left, int top, int right, int bottom) {
         super.setPadding(left, top, right, bottom);
-        rects = null;
+        types = null;
         invalidate();
     }
 
     public void setPadding(int padding) {
         setPadding(padding, padding, padding, padding);
+        postInvalidate();
     }
 }

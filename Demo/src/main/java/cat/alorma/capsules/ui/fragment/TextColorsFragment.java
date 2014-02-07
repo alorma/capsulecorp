@@ -4,6 +4,7 @@ import android.graphics.Color;
 
 import cat.alorma.capsulecorp.library.capsule.impl.ColorCapsule;
 import cat.alorma.capsulecorp.library.capsule.impl.TextCapsule;
+import cat.alorma.capsules.R;
 
 /**
  * Created by Bernat on 25/11/13.
@@ -11,6 +12,10 @@ import cat.alorma.capsulecorp.library.capsule.impl.TextCapsule;
 public class TextColorsFragment extends BaseFragment {
     @Override
     protected void generateCapsules() {
+
+        dispenserView.setMaskResource(R.drawable.mask);
+        dispenserView.setMaskEnabled(true);
+
         setCapsule1(new TextCapsule("0", Color.parseColor("#000000"), Color.parseColor("#e67e22")));
         setCapsule2(new TextCapsule("1", Color.parseColor("#000000"), Color.parseColor("#9b59b6")));
         setCapsule3(new TextCapsule("2", Color.parseColor("#000000"), Color.parseColor("#bdc3c7")));

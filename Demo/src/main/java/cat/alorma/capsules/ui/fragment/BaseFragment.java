@@ -9,6 +9,10 @@ import android.widget.SeekBar;
 
 import cat.alorma.capsulecorp.library.DispenserView;
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
+import cat.alorma.capsulecorp.library.capsulestype.TypeFour;
+import cat.alorma.capsulecorp.library.capsulestype.TypeOne;
+import cat.alorma.capsulecorp.library.capsulestype.TypeThree;
+import cat.alorma.capsulecorp.library.capsulestype.TypeTwo;
 import cat.alorma.capsules.R;
 
 /**
@@ -62,13 +66,13 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
         dispenserView.clear();
         switch (progress) {
             case 4:
-                dispenserView.addCapsule(3, getCapsule4());
+                dispenserView.addCapsule(getCapsule4());
             case 3:
-                dispenserView.addCapsule(2, getCapsule3());
+                dispenserView.addCapsule(getCapsule3());
             case 2:
-                dispenserView.addCapsule(1, getCapsule2());
+                dispenserView.addCapsule(getCapsule2());
             case 1:
-                dispenserView.addCapsule(0, getCapsule1());
+                dispenserView.addCapsule(getCapsule1());
         }
     }
 
