@@ -1,14 +1,19 @@
 package cat.alorma.capsules.ui.fragment;
 
 import android.graphics.Color;
+import android.os.Bundle;
+import android.view.View;
 
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
 import cat.alorma.capsulecorp.library.capsule.impl.ColorCapsule;
+import cat.alorma.capsules.ui.capsules.CustomType;
 
 /**
  * Created by Bernat on 25/11/13.
  */
 public class ColorsFragment extends BaseFragment {
+
+
 
     @Override
     protected Capsule getCapsule1() {

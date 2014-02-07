@@ -38,6 +38,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     private Bitmap original;
     private int divider_color;
     private int divider_size;
+    private boolean isConcretTypeDefined;
 
     public DispenserView(Context context) {
         super(context);
@@ -104,17 +105,18 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     }
 
     private Type getConcretType() {
-        concretType = concretType != null
-                ? concretType
-                : TypeFactory.newInstance(this, capsules.size(), divider_size);
+        if (!isConcretTypeDefined) {
+            concretType = TypeFactory.newInstance(this, capsules.size(), divider_size);
+        }
         return concretType;
     }
 
     public void setConcretType(Type concretType) {
-        if (concretType != null){
-            this.concretType = TypeFactory.setData(this, concretType, divider_size);
+        if (concretType != null) {
+            this.isConcretTypeDefined = true;
+            this.concretType = concretType;
         }
-
+        postInvalidate();
     }
 
     public int getMaskResource() {
@@ -166,6 +168,8 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+
+        TypeFactory.setData(this, getConcretType(), divider_size);
 
         if (result == null && original == null) {
             result = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
@@ -271,20 +275,18 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     public void clear() {
         capsules.clear();
-        concretType = null;
         postInvalidate();
     }
 
     @Override
     public void invalidateParent() {
-        invalidate();
+        postInvalidate();
     }
 
     @Override
     public void setPadding(int left, int top, int right, int bottom) {
         super.setPadding(left, top, right, bottom);
-        concretType = null;
-        invalidate();
+        postInvalidate();
     }
 
     public void setPadding(int padding) {

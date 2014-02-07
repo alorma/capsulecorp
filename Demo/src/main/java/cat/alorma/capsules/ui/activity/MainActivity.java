@@ -13,6 +13,7 @@ import java.util.List;
 
 import cat.alorma.capsules.R;
 import cat.alorma.capsules.ui.fragment.ColorsFragment;
+import cat.alorma.capsules.ui.fragment.CustomFragment;
 import cat.alorma.capsules.ui.fragment.ImagesCapsulesFragment;
 import cat.alorma.capsules.ui.fragment.ListCapsulesFragment;
 import cat.alorma.capsules.ui.fragment.TextColorsFragment;
@@ -33,6 +34,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
             titles.add("Texts");
             titles.add("Images");
             titles.add("List");
+            titles.add("Custom");
 
             for (String str : titles) {
                 ActionBar.Tab tab = getActionBar().newTab();
@@ -58,6 +60,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         fragments.put(1, new TextColorsFragment());
         fragments.put(2, new ImagesCapsulesFragment());
         fragments.put(3, new ListCapsulesFragment());
+        fragments.put(4, new CustomFragment());
     }
 
     @Override

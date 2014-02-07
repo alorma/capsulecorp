@@ -4,17 +4,15 @@ import android.graphics.Rect;
 import android.view.View;
 
 import cat.alorma.capsulecorp.library.viewhelpers.Centers;
+import cat.alorma.capsulecorp.library.viewhelpers.Paddings;
 
 /**
  * Created by Bernat on 7/02/14.
  */
 public class TypeFactory {
-    private static int paddingLeft;
-    private static int paddingRight;
-    private static int paddingTop;
-    private static int paddingBottom;
     private static Rect clipBounds;
     private static Centers centers;
+    private static Paddings paddings;
 
     public static Type newInstance(View view, int size, int dividerSize) {
         Type type = createType(size);
@@ -34,6 +32,8 @@ public class TypeFactory {
 
         type.setCenters(centers);
 
+        type.setPaddings(paddings);
+
         return type;
     }
 
@@ -42,15 +42,21 @@ public class TypeFactory {
     }
 
     private static void calculatePaddings(View view) {
-        paddingLeft = view.getPaddingLeft() < clipBounds.width() / 2 ? view.getPaddingLeft() : 0;
-        paddingRight = view.getPaddingRight() < clipBounds.width() / 2 ? view.getPaddingRight() : 0;
-        paddingTop = view.getPaddingTop() < clipBounds.height() / 2 ? view.getPaddingTop() : 0;
-        paddingBottom = view.getPaddingBottom() < clipBounds.height() / 2 ? view.getPaddingBottom() : 0;
+        int paddingLeft = view.getPaddingLeft() < clipBounds.width() / 2 ? view.getPaddingLeft() : 0;
+        int paddingRight = view.getPaddingRight() < clipBounds.width() / 2 ? view.getPaddingRight() : 0;
+        int paddingTop = view.getPaddingTop() < clipBounds.height() / 2 ? view.getPaddingTop() : 0;
+        int paddingBottom = view.getPaddingBottom() < clipBounds.height() / 2 ? view.getPaddingBottom() : 0;
 
         clipBounds.left = paddingLeft;
         clipBounds.right = clipBounds.right - paddingRight;
         clipBounds.top = paddingTop;
         clipBounds.bottom = clipBounds.bottom - paddingBottom;
+
+        paddings = new Paddings();
+        paddings.setPaddingLeft(paddingLeft);
+        paddings.setPaddingRight(paddingRight);
+        paddings.setPaddingTop(paddingTop);
+        paddings.setPaddingBottom(paddingBottom);
     }
 
     private static Type createType(int size) {
@@ -70,8 +76,8 @@ public class TypeFactory {
     }
 
     private static void calculateCenters(int dividerSize) {
-        int centerX = (clipBounds.width() / 2) + paddingLeft;
-        int centerY = (clipBounds.height() / 2) + paddingTop;
+        int centerX = (clipBounds.width() / 2) + paddings.getPaddingLeft();
+        int centerY = (clipBounds.height() / 2) + paddings.getPaddingTop();
 
         int centerXL = centerX;
         int centerXR = centerX;
