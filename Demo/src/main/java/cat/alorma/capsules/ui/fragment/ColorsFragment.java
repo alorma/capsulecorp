@@ -14,6 +14,6 @@ public class ColorsFragment extends BaseFragment {
         setCapsule1(new ColorCapsule(Color.parseColor("#e67e22")));
         setCapsule2(new ColorCapsule(Color.parseColor("#9b59b6")));
         setCapsule3(new ColorCapsule(Color.parseColor("#bdc3c7")));
-        setCapsule4(new ColorCapsule(Color.parseColor("#1abc9c")));
+        setCapsule4(new ColorCapsule(Color.parseColor("#FF0000")));
     }
 }

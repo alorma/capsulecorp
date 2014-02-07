@@ -1,5 +1,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -22,11 +23,13 @@
     <cat.alorma.capsulecorp.library.DispenserView
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:background="@android:color/darker_gray"
-        android:padding="15dp"
+        android:background="@android:color/holo_blue_light"
+        android:padding="16dp"
         android:id="@+id/dispenserView"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        custom:divider_color="@color/EA"
+        custom:divider_size="8dp"/>
 
     <Button
         android:layout_width="wrap_content"
