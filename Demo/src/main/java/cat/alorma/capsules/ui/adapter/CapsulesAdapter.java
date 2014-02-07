@@ -12,6 +12,7 @@ import java.util.List;
 import cat.alorma.capsulecorp.library.DispenserView;
 import cat.alorma.capsules.R;
 import cat.alorma.capsules.model.Data;
+import cat.alorma.capsules.ui.capsules.CustomType;
 
 /**
  * Created by Bernat on 25/11/13.
@@ -91,6 +92,9 @@ public class CapsulesAdapter extends ArrayAdapter<Data> {
                     vh.dispenserView.addCapsule(data.getCapsules().get(i));
                 }
                 vh.dispenserView.setMaskEnabled(maskEnabled);
+                if (position % 5 == 0) {
+                    vh.dispenserView.setConcretType(new CustomType());
+                }
             }
         }
 
