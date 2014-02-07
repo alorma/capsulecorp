@@ -111,7 +111,9 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     }
 
     public void setConcretType(Type concretType) {
-        this.concretType = concretType;
+        if (concretType != null){
+            this.concretType = TypeFactory.setData(this, concretType, divider_size);
+        }
 
     }
 

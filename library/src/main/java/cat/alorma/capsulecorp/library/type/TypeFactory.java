@@ -17,11 +17,24 @@ public class TypeFactory {
     private static Centers centers;
 
     public static Type newInstance(View view, int size, int dividerSize) {
+        Type type = createType(size);
         calculateClipBounds(view);
         calculatePaddings(view);
         calculateCenters(dividerSize);
 
-        return createType(size);
+        return setData(view, type, dividerSize);
+    }
+
+    public static Type setData(View view, Type type, int dividerSize) {
+        calculateClipBounds(view);
+        calculatePaddings(view);
+        calculateCenters(dividerSize);
+
+        type.setClipBounds(clipBounds);
+
+        type.setCenters(centers);
+
+        return type;
     }
 
     private static void calculateClipBounds(View view) {
@@ -53,11 +66,6 @@ public class TypeFactory {
                 type = new TypeFour();
                 break;
         }
-
-        type.setClipBounds(clipBounds);
-
-        type.setCenters(centers);
-
         return type;
     }
 
