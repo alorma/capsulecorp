@@ -174,7 +174,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         Rect bounds = getBoundPaint(canvas);
         drawDividers(canvas, bounds);
         drawCapsules(original);
-        drawMask(canvas);
+        drawMask(canvas,bounds);
 
         canvas.restore();
 
@@ -185,18 +185,27 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     private Rect getBoundPaint(Canvas canvas){
         Rect clipBounds = canvas.getClipBounds();
 
+        Rect padding = getBoundPadding(canvas);
+
+        clipBounds.left = padding.left;
+        clipBounds.right = clipBounds.right - padding.right;
+        clipBounds.top = padding.top;
+        clipBounds.bottom = clipBounds.bottom - padding.bottom;
+
+        return clipBounds;
+    }
+
+    private Rect getBoundPadding(Canvas canvas){
+        Rect clipBounds = canvas.getClipBounds();
         int paddingLeft = getPaddingLeft() < clipBounds.width() / 2 ? getPaddingLeft() : 0;
         int paddingRight = getPaddingRight() < clipBounds.width() / 2 ? getPaddingRight() : 0;
         int paddingTop = getPaddingTop() < clipBounds.height() / 2 ? getPaddingTop() : 0;
         int paddingBottom = getPaddingBottom() < clipBounds.height() / 2 ? getPaddingBottom() : 0;
 
-        clipBounds.left = paddingLeft;
-        clipBounds.right = clipBounds.right - paddingRight;
-        clipBounds.top = paddingTop;
-        clipBounds.bottom = clipBounds.bottom - paddingBottom;
-
-        return clipBounds;
+        Rect rect = new Rect(paddingLeft,paddingTop,paddingRight,paddingBottom);
+        return rect;
     }
+
     private void drawDividers(Canvas canvas, Rect bounds) {
         if (divider_size > 0 || divider_color != -1) {
             Paint dividerPaint = new Paint();
@@ -224,7 +233,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         }
     }
 
-    private void drawMask(Canvas canvas) {
+    private void drawMask(Canvas canvas,Rect bounds) {
         Bitmap mask = null;
         Canvas mCanvas = new Canvas(result);
 
@@ -232,13 +241,14 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
         if (this.maskEnabled && maskResource != -1) {
             mask = BitmapFactory.decodeResource(getResources(), maskResource);
-            mask = Bitmap.createScaledBitmap(mask, original.getWidth(), original.getHeight(), true);
+            mask = Bitmap.createScaledBitmap(mask, bounds.width(),bounds.height(), true);
         }
 
         if (mask != null) {
+            Rect padding = getBoundPadding(canvas);
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
-            mCanvas.drawBitmap(original, 0, 0, null);
-            mCanvas.drawBitmap(mask, 0, 0, paint);
+            mCanvas.drawBitmap(original, 0,0, null);
+            mCanvas.drawBitmap(mask, padding.left, padding.top, paint);
             paint.setXfermode(null);
         } else {
             mCanvas.drawBitmap(original, 0, 0, paint);
