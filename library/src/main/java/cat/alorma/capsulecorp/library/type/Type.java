@@ -2,18 +2,16 @@ package cat.alorma.capsulecorp.library.type;
 
 import android.graphics.Rect;
 
-import cat.alorma.capsulecorp.library.viewhelpers.Centers;
-import cat.alorma.capsulecorp.library.viewhelpers.Paddings;
 
 /**
  * Created by adria on 6/02/14.
  */
 public abstract class Type {
     private Rect clipBounds;
-    private Centers centers;
+    private Rect centers;
 
     private Rect[] rects;
-    private Paddings paddings;
+    private Rect paddings;
 
     public Type() {
     }
@@ -22,11 +20,11 @@ public abstract class Type {
         rects = calculateRects(clipBounds, null, null);
     }
 
-    public Type(Rect clipBounds, Centers centers, Paddings paddings) {
+    public Type(Rect clipBounds, Rect centers, Rect paddings) {
         rects = calculateRects(clipBounds, centers, paddings);
     }
 
-    public abstract Rect[] calculateRects(Rect clipBounds, Centers centers, Paddings paddings);
+    public abstract Rect[] calculateRects(Rect clipBounds, Rect centers, Rect paddings);
 
     public Rect[] getRects() {
         return rects;
@@ -39,15 +37,15 @@ public abstract class Type {
     public void setClipBounds(Rect clipBounds) {
         this.clipBounds = clipBounds;
         if (clipBounds != null) {
-            rects = calculateRects(clipBounds, new Centers(), null);
+            rects = calculateRects(clipBounds, new Rect(), null);
         }
     }
 
-    public Centers getCenters() {
+    public Rect getCenters() {
         return centers;
     }
 
-    public void setCenters(Centers centers) {
+    public void setCenters(Rect centers) {
         this.centers = centers;
         if (clipBounds != null && centers != null) {
             rects = calculateRects(clipBounds, centers, null);
@@ -56,11 +54,11 @@ public abstract class Type {
 
     public abstract int size();
 
-    public void setPaddings(Paddings paddings) {
+    public void setPaddings(Rect paddings) {
         this.paddings = paddings;
     }
 
-    public Paddings getPaddings() {
+    public Rect getPaddings() {
         return paddings;
     }
 }

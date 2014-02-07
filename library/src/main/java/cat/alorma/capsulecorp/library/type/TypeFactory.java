@@ -3,16 +3,14 @@ package cat.alorma.capsulecorp.library.type;
 import android.graphics.Rect;
 import android.view.View;
 
-import cat.alorma.capsulecorp.library.viewhelpers.Centers;
-import cat.alorma.capsulecorp.library.viewhelpers.Paddings;
 
 /**
  * Created by Bernat on 7/02/14.
  */
 public class TypeFactory {
     private static Rect clipBounds;
-    private static Centers centers;
-    private static Paddings paddings;
+    private static Rect centers;
+    private static Rect paddings;
 
     public static Type newInstance(View view, int size, int dividerSize) {
         Type type = createType(size);
@@ -52,11 +50,7 @@ public class TypeFactory {
         clipBounds.top = paddingTop;
         clipBounds.bottom = clipBounds.bottom - paddingBottom;
 
-        paddings = new Paddings();
-        paddings.setPaddingLeft(paddingLeft);
-        paddings.setPaddingRight(paddingRight);
-        paddings.setPaddingTop(paddingTop);
-        paddings.setPaddingBottom(paddingBottom);
+        paddings = new Rect(paddingLeft,paddingTop,paddingRight,paddingBottom);
     }
 
     private static Type createType(int size) {
@@ -76,8 +70,8 @@ public class TypeFactory {
     }
 
     private static void calculateCenters(int dividerSize) {
-        int centerX = (clipBounds.width() / 2) + paddings.getPaddingLeft();
-        int centerY = (clipBounds.height() / 2) + paddings.getPaddingTop();
+        int centerX = (clipBounds.width() / 2) + paddings.left;
+        int centerY = (clipBounds.height() / 2) + paddings.top;
 
         int centerXL = centerX;
         int centerXR = centerX;
@@ -91,10 +85,6 @@ public class TypeFactory {
             centerYB = centerYB + (dividerSize / 2);
         }
 
-        centers = new Centers();
-        centers.setCenterXL(centerXL);
-        centers.setCenterXR(centerXR);
-        centers.setCenterYT(centerYT);
-        centers.setCenterYB(centerYB);
+        centers = new Rect(centerXL,centerYT,centerXR,centerYB);
     }
 }

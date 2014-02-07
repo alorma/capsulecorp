@@ -3,6 +3,7 @@ package cat.alorma.capsulecorp.library.capsule.impl;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 
 import java.io.IOException;
@@ -36,9 +37,15 @@ public class UrlBitmapCapsule extends ImageUrlCapsule {
                 connection.setDoInput(true);
                 connection.connect();
                 InputStream input = connection.getInputStream();
-                return BitmapFactory.decodeStream(input);
-            } catch (IOException e) {
+                if(input == null){
+                    return null;
+                }else{
+                    return BitmapFactory.decodeStream(input);
+                }
+            } catch (Exception e) {
                 e.printStackTrace();
+                return null;
+            }catch (OutOfMemoryError e){
                 return null;
             }
         }

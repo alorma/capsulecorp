@@ -3,8 +3,6 @@ package cat.alorma.capsules.ui.capsules;
 import android.graphics.Rect;
 
 import cat.alorma.capsulecorp.library.type.Type;
-import cat.alorma.capsulecorp.library.viewhelpers.Centers;
-import cat.alorma.capsulecorp.library.viewhelpers.Paddings;
 
 /**
  * Created by Bernat on 7/02/14.
@@ -12,7 +10,7 @@ import cat.alorma.capsulecorp.library.viewhelpers.Paddings;
 public class CustomType extends Type {
 
     @Override
-    public Rect[] calculateRects(Rect clipBounds, Centers centers, Paddings paddings) {
+    public Rect[] calculateRects(Rect clipBounds, Rect centers, Rect paddings) {
 
         int size = clipBounds.right - clipBounds.left;
         int terc1 = size / 3 + clipBounds.left;
