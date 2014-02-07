@@ -227,7 +227,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     private void drawCapsules(Bitmap original) {
         Canvas originalImage = new Canvas(original);
         Rect[] rects = getConcretType().getRects();
-        if (capsules != null && size() > 0) {
+        if (capsules != null && size() > 0 && rects != null && rects.length > 0) {
             for (int i = 0; i < size(); i++) {
                 Capsule capsule = capsules.get(i);
                 drawCapsule(originalImage, capsule, rects[i]);

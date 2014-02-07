@@ -8,9 +8,17 @@ import android.graphics.Rect;
  */
 public class TypeOne extends Type {
 
+    public TypeOne(Rect[] rects) {
+        super(rects);
+    }
+
+    public TypeOne() {
+        super();
+    }
+
     @Override
-    public Rect[] calculateRects(Rect clipBounds, Rect centers, Rect paddings) {
-        return new Rect[] {clipBounds};
+    public Type calculateRects(Rect clipBounds, Rect centers, Rect paddings) {
+        return new TypeOne(new Rect[] {clipBounds});
     }
 
     @Override

@@ -7,16 +7,20 @@ import android.graphics.Rect;
  */
 public class TypeTwo extends Type {
 
-    public TypeTwo() {
+    public TypeTwo(Rect[] rects) {
+        super(rects);
+    }
 
+    public TypeTwo() {
+        super();
     }
 
     @Override
-    public Rect[] calculateRects(Rect clipBounds, Rect centers, Rect paddings) {
+    public Type calculateRects(Rect clipBounds, Rect centers, Rect paddings) {
         Rect rect1 = new Rect(clipBounds.left, clipBounds.top, centers.left, clipBounds.bottom);
         Rect rect2 = new Rect(centers.right, clipBounds.top, clipBounds.right, clipBounds.bottom);
 
-        return new Rect[] {rect1, rect2};
+        return new TypeTwo(new Rect[] {rect1, rect2});
     }
 
     @Override
