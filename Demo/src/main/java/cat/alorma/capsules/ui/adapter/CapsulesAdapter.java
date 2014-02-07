@@ -22,6 +22,7 @@ public class CapsulesAdapter extends ArrayAdapter<Data> {
 
     private LayoutInflater mInflater;
     private boolean isFling;
+    private boolean maskEnabled = false;
 
     // Constructors
     public CapsulesAdapter(Context context, List<Data> objects) {
@@ -36,6 +37,11 @@ public class CapsulesAdapter extends ArrayAdapter<Data> {
 
     public void setFling(boolean fling) {
         this.isFling = fling;
+        this.notifyDataSetChanged();
+    }
+
+    public void setMaskEnabled() {
+        this.maskEnabled = !maskEnabled;
         this.notifyDataSetChanged();
     }
 
@@ -84,7 +90,7 @@ public class CapsulesAdapter extends ArrayAdapter<Data> {
                 for (int i = 0; i < (data.getCapsules().size() <= 4 ? data.getCapsules().size() : 4); i++) {
                     vh.dispenserView.addCapsule(data.getCapsules().get(i));
                 }
-                vh.dispenserView.setMaskEnabled((position % 3) == 0);
+                vh.dispenserView.setMaskEnabled(maskEnabled);
             }
         }
 

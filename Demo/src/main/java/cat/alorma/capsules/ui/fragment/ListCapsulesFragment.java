@@ -3,6 +3,7 @@ package cat.alorma.capsules.ui.fragment;
 import android.app.ListFragment;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 
@@ -13,6 +14,7 @@ import java.util.Random;
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
 import cat.alorma.capsulecorp.library.capsule.impl.ColorCapsule;
 import cat.alorma.capsulecorp.library.capsule.impl.TextCapsule;
+import cat.alorma.capsules.R;
 import cat.alorma.capsules.model.Data;
 import cat.alorma.capsules.ui.adapter.CapsulesAdapter;
 import cat.alorma.capsules.ui.capsules.PicassoCapsule;
@@ -22,6 +24,12 @@ import cat.alorma.capsules.ui.capsules.PicassoCapsule;
  */
 public class ListCapsulesFragment extends ListFragment implements AbsListView.OnScrollListener {
     private CapsulesAdapter adapter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -91,5 +99,16 @@ public class ListCapsulesFragment extends ListFragment implements AbsListView.On
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+
+        if (item.getItemId() == R.id.action_mask) {
+            adapter.setMaskEnabled();
+        }
+
+        return true;
     }
 }
