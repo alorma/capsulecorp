@@ -6,14 +6,15 @@ import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.SparseArray;
+import android.view.Menu;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import cat.alorma.capsules.R;
 import cat.alorma.capsules.ui.fragment.ColorsFragment;
 import cat.alorma.capsules.ui.fragment.ImagesCapsulesFragment;
 import cat.alorma.capsules.ui.fragment.ListCapsulesFragment;
-import cat.alorma.capsules.ui.fragment.MaskFragment;
 import cat.alorma.capsules.ui.fragment.TextColorsFragment;
 
 public class MainActivity extends Activity implements ActionBar.TabListener {
@@ -33,7 +34,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
             titles.add("Images");
             titles.add("List");
 
-            for (String str:titles) {
+            for (String str : titles) {
                 ActionBar.Tab tab = getActionBar().newTab();
                 tab.setText(str);
                 tab.setTabListener(this);
@@ -67,5 +68,14 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        super.onCreateOptionsMenu(menu);
+
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        return true;
     }
 }

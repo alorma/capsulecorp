@@ -3,6 +3,8 @@ package cat.alorma.capsulecorp.library.type;
 import android.graphics.Rect;
 import android.view.View;
 
+import cat.alorma.capsulecorp.library.viewhelpers.Centers;
+
 /**
  * Created by Bernat on 7/02/14.
  */
@@ -11,29 +13,19 @@ public class TypeFactory {
     private static int paddingRight;
     private static int paddingTop;
     private static int paddingBottom;
-    private static int centerXL;
-    private static int centerXR;
-    private static int centerYT;
-    private static int centerYB;
     private static Rect clipBounds;
+    private static Centers centers;
 
     public static Type newInstance(View view, int size, int dividerSize) {
         calculateClipBounds(view);
-
         calculatePaddings(view);
         calculateCenters(dividerSize);
 
-        Type type = createType(size);
-
-        return type;
+        return createType(size);
     }
 
     private static void calculateClipBounds(View view) {
-        clipBounds =  new Rect(
-                0,
-                0,
-                view.getWidth(),
-                view.getHeight());
+        clipBounds = new Rect(0, 0, view.getWidth(), view.getHeight());
     }
 
     private static void calculatePaddings(View view) {
@@ -64,8 +56,6 @@ public class TypeFactory {
 
         type.setClipBounds(clipBounds);
 
-        int[] centers = new int[] {centerXL, centerYT, centerXR, centerYB};
-
         type.setCenters(centers);
 
         return type;
@@ -75,10 +65,10 @@ public class TypeFactory {
         int centerX = (clipBounds.width() / 2) + paddingLeft;
         int centerY = (clipBounds.height() / 2) + paddingTop;
 
-        centerXL = centerX;
-        centerXR = centerX;
-        centerYT = centerY;
-        centerYB = centerY;
+        int centerXL = centerX;
+        int centerXR = centerX;
+        int centerYT = centerY;
+        int centerYB = centerY;
 
         if (dividerSize != -1) {
             centerXL = centerXL - (dividerSize / 2);
@@ -86,5 +76,11 @@ public class TypeFactory {
             centerYT = centerYT - (dividerSize / 2);
             centerYB = centerYB + (dividerSize / 2);
         }
+
+        centers = new Centers();
+        centers.setCenterXL(centerXL);
+        centers.setCenterXR(centerXR);
+        centers.setCenterYT(centerYT);
+        centers.setCenterYB(centerYB);
     }
 }

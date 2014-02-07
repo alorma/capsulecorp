@@ -4,6 +4,7 @@ import android.app.ListFragment;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AbsListView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +20,16 @@ import cat.alorma.capsules.ui.capsules.PicassoCapsule;
 /**
  * Created by Bernat on 25/11/13.
  */
-public class ListCapsulesFragment extends ListFragment {
+public class ListCapsulesFragment extends ListFragment implements AbsListView.OnScrollListener {
+    private CapsulesAdapter adapter;
+
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        if (getListView() != null) {
+            getListView().setOnScrollListener(this);
+        }
 
         List<Data> datas = new ArrayList<Data>();
         for (int i = 0; i < 100; i++) {
@@ -41,7 +48,7 @@ public class ListCapsulesFragment extends ListFragment {
             datas.add(data);
         }
 
-        CapsulesAdapter adapter = new CapsulesAdapter(getActivity(), datas);
+        adapter = new CapsulesAdapter(getActivity(), datas);
 
         setListAdapter(adapter);
     }
@@ -74,5 +81,15 @@ public class ListCapsulesFragment extends ListFragment {
         capsules.add(new TextCapsule("Helena", Color.parseColor("#000000"), Color.parseColor("#bdc3c7")));
         capsules.add(new PicassoCapsule(getActivity(), "http://pandalabs.pandasecurity.com/es/wp-content/uploads/2010/03/Mariposaimage.jpg"));
         return capsules;
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        adapter.setFling(scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING);
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
     }
 }

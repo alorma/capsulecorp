@@ -21,6 +21,7 @@ import cat.alorma.capsules.model.Data;
 public class CapsulesAdapter extends ArrayAdapter<Data> {
 
     private LayoutInflater mInflater;
+    private boolean isFling;
 
     // Constructors
     public CapsulesAdapter(Context context, List<Data> objects) {
@@ -31,6 +32,11 @@ public class CapsulesAdapter extends ArrayAdapter<Data> {
     public CapsulesAdapter(Context context, Data[] objects) {
         super(context, 0, objects);
         this.mInflater = LayoutInflater.from(context);
+    }
+
+    public void setFling(boolean fling) {
+        this.isFling = fling;
+        this.notifyDataSetChanged();
     }
 
     /**
@@ -71,14 +77,15 @@ public class CapsulesAdapter extends ArrayAdapter<Data> {
             vh = (ViewHolder) convertView.getTag();
         }
 
-        vh.textView.setText(data.getName());
-        if (data.getCapsules() != null) {
-
-            vh.dispenserView.clear();
-            for (int i = 0; i < (data.getCapsules().size() <= 4 ? data.getCapsules().size() : 4); i++) {
-                vh.dispenserView.addCapsule(data.getCapsules().get(i));
+        if (!isFling) {
+            vh.textView.setText(data.getName());
+            if (data.getCapsules() != null) {
+                vh.dispenserView.clear();
+                for (int i = 0; i < (data.getCapsules().size() <= 4 ? data.getCapsules().size() : 4); i++) {
+                    vh.dispenserView.addCapsule(data.getCapsules().get(i));
+                }
+                vh.dispenserView.setMaskEnabled((position % 3) == 0);
             }
-            vh.dispenserView.setMaskEnabled((position % 3) == 0);
         }
 
         return vh.rootView;

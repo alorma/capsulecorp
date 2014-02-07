@@ -12,6 +12,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -102,10 +103,11 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         }
     }
 
-    private void getConcretType() {
+    private Type getConcretType() {
         concretType = concretType != null
                 ? concretType
                 : TypeFactory.newInstance(this, capsules.size(), divider_size);
+        return concretType;
     }
 
     public void setConcretType(Type concretType) {
@@ -117,22 +119,26 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         return maskResource;
     }
 
-    public int getDivider_size() {
+    public int getDividerSize() {
         return divider_size;
     }
 
-    public void setDivider_size(int divider_size) {
+    public void setDividerSize(int divider_size) {
         this.divider_size = divider_size;
         postInvalidate();
     }
 
-    public int getDivider_color() {
+    public int getDividerColor() {
         return divider_color;
     }
 
-    public void setDivider_color(int divider_color) {
+    public void setDividerColor(int divider_color) {
         this.divider_color = divider_color;
         postInvalidate();
+    }
+
+    public boolean isMaskEnabled() {
+        return maskEnabled;
     }
 
     public void setMaskEnabled(boolean mask) {
@@ -150,10 +156,8 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
             capsules = new ArrayList<Capsule>();
         }
         if (capsule != null) {
-            if (capsules.size() <= MAX_CAPSULES) {
-                capsule.setCapsuleListener(this);
-                capsules.add(capsule);
-            }
+            capsule.setCapsuleListener(this);
+            capsules.add(capsules.size(), capsule);
         }
     }
 
@@ -216,12 +220,12 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     private void drawCapsules(Bitmap original) {
         Canvas originalImage = new Canvas(original);
-        if (capsules != null && capsules.size() > 0) {
-            int size = capsules.size() <= MAX_CAPSULES ? capsules.size() : MAX_CAPSULES;
-            for (int i = 0; i < size; i++) {
+        Rect[] rects = getConcretType().getRects();
+        if (capsules != null && size() > 0) {
+            for (int i = 0; i < size(); i++) {
                 Capsule capsule = capsules.get(i);
-                Rect[] rects = concretType.getRects();
                 drawCapsule(originalImage, capsule, rects[i]);
+                Log.i("RECT", rects[i].toShortString());
             }
         }
     }
@@ -255,6 +259,12 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         }
 
         canvas.drawBitmap(result, new Matrix(), new Paint());
+    }
+
+    private int size() {
+        int size = capsules.size() <= MAX_CAPSULES ? capsules.size() : MAX_CAPSULES;
+        size = size <= getConcretType().size() ? size : getConcretType().size();
+        return size;
     }
 
     public void clear() {

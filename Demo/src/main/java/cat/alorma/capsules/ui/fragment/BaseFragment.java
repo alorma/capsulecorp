@@ -3,6 +3,7 @@ package cat.alorma.capsules.ui.fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
@@ -18,10 +19,6 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
 
     protected DispenserView dispenserView;
 
-    private Capsule capsule1;
-    private Capsule capsule2;
-    private Capsule capsule3;
-    private Capsule capsule4;
     private SeekBar seekBar;
 
     @Override
@@ -43,8 +40,6 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
         view.findViewById(R.id.padding50).setOnClickListener(this);
         view.findViewById(R.id.padding100).setOnClickListener(this);
 
-        generateCapsules();
-
         seekBar = (SeekBar) view.findViewById(R.id.seekBar);
         seekBar.setOnSeekBarChangeListener(this);
         seekBar.setMax(3);
@@ -62,15 +57,33 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
         dispenserView.clear();
         switch (progress) {
             case 4:
-                dispenserView.addCapsule(getCapsule4());
-            case 3:
-                dispenserView.addCapsule(getCapsule3());
-            case 2:
+                dispenserView.addCapsule(getCapsule1());
                 dispenserView.addCapsule(getCapsule2());
+                dispenserView.addCapsule(getCapsule3());
+                dispenserView.addCapsule(getCapsule4());
+                break;
+            case 3:
+                dispenserView.addCapsule(getCapsule1());
+                dispenserView.addCapsule(getCapsule2());
+                dispenserView.addCapsule(getCapsule3());
+                break;
+            case 2:
+                dispenserView.addCapsule(getCapsule1());
+                dispenserView.addCapsule(getCapsule2());
+                break;
             case 1:
                 dispenserView.addCapsule(getCapsule1());
+                break;
         }
     }
+
+    protected abstract Capsule getCapsule1();
+
+    protected abstract Capsule getCapsule2();
+
+    protected abstract Capsule getCapsule3();
+
+    protected abstract Capsule getCapsule4();
 
     @Override
     public void onStartTrackingTouch(SeekBar seekBar) {
@@ -80,40 +93,6 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
     @Override
     public void onStopTrackingTouch(SeekBar seekBar) {
 
-    }
-
-    protected abstract void generateCapsules();
-
-    public Capsule getCapsule1() {
-        return capsule1;
-    }
-
-    public void setCapsule1(Capsule capsule1) {
-        this.capsule1 = capsule1;
-    }
-
-    public Capsule getCapsule2() {
-        return capsule2;
-    }
-
-    public void setCapsule2(Capsule capsule2) {
-        this.capsule2 = capsule2;
-    }
-
-    public Capsule getCapsule3() {
-        return capsule3;
-    }
-
-    public void setCapsule3(Capsule capsule3) {
-        this.capsule3 = capsule3;
-    }
-
-    public Capsule getCapsule4() {
-        return capsule4;
-    }
-
-    public void setCapsule4(Capsule capsule4) {
-        this.capsule4 = capsule4;
     }
 
     @Override
@@ -134,5 +113,20 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
                 break;
         }
         dispenserView.setPadding(padding);
+    }
+
+    public void setMaskEnabled() {
+        dispenserView.setMaskEnabled(!dispenserView.isMaskEnabled());
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+
+        if (item.getItemId() == R.id.action_mask) {
+            setMaskEnabled();
+        }
+
+        return true;
     }
 }
