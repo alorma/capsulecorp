@@ -238,10 +238,12 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         Canvas mCanvas = new Canvas(result);
 
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+        //paint.setColor(getResources().getColor(android.R.color.transparent));
 
         if (this.maskEnabled && maskResource != -1) {
             mask = BitmapFactory.decodeResource(getResources(), maskResource);
             mask = Bitmap.createScaledBitmap(mask, bounds.width(),bounds.height(), true);
+            mask.eraseColor(Color.TRANSPARENT);
         }
 
         if (mask != null) {
