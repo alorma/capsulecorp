@@ -14,6 +14,12 @@ import cat.alorma.capsules.ui.capsules.CustomTypeFive;
 public class CustomFragment extends BaseFragment {
 
     @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        seekBar.setMax(4);
+    }
+
+    @Override
     protected Capsule getCapsule1() {
         return new TextCapsule("1", Color.parseColor("#000000"), Color.parseColor("#e67e22"));
     }
@@ -36,5 +42,20 @@ public class CustomFragment extends BaseFragment {
     @Override
     protected Type getType() {
         return new CustomTypeFive();
+    }
+
+    @Override
+    protected void changeView(int progress) {
+        super.changeView(progress);
+        progress++;
+        switch (progress) {
+            case 5:
+                dispenserView.addCapsule(getCapsule1());
+                dispenserView.addCapsule(getCapsule2());
+                dispenserView.addCapsule(getCapsule3());
+                dispenserView.addCapsule(getCapsule4());
+                dispenserView.addCapsule(new TextCapsule("5", Color.parseColor("#000000"), Color.parseColor("#bdc3c7")));
+                break;
+        }
     }
 }

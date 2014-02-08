@@ -22,7 +22,7 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
 
     protected DispenserView dispenserView;
 
-    private SeekBar seekBar;
+    protected SeekBar seekBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -53,7 +53,7 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
 
         seekBar = (SeekBar) view.findViewById(R.id.seekBar);
         seekBar.setOnSeekBarChangeListener(this);
-        seekBar.setMax(4);
+        seekBar.setMax(3);
 
         seekBar.setProgress(2);
     }
@@ -63,17 +63,10 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
         changeView(progress);
     }
 
-    private void changeView(int progress) {
+    protected void changeView(int progress) {
         progress++;
         dispenserView.clear();
         switch (progress) {
-            case 5:
-                dispenserView.addCapsule(getCapsule1());
-                dispenserView.addCapsule(getCapsule2());
-                dispenserView.addCapsule(getCapsule3());
-                dispenserView.addCapsule(getCapsule4());
-                dispenserView.addCapsule(new TextCapsule("5", Color.parseColor("#000000"), Color.parseColor("#bdc3c7")));
-                break;
             case 4:
                 dispenserView.addCapsule(getCapsule1());
                 dispenserView.addCapsule(getCapsule2());

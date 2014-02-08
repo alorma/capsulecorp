@@ -19,9 +19,6 @@ public class CustomTypeFive extends Type {
 
     @Override
     public Type calculateRects(Rect clipBounds, Rect centers, Rect paddings) {
-        Log.i("RECT FIVE clip ", clipBounds.toString());
-        Log.i("RECT FIVE centers", centers.toString());
-        Log.i("RECT FIVE padding", paddings.toString());
         Rect rect1 = new Rect(clipBounds.left, clipBounds.top, centers.left, centers.top);
         Rect rect2 = new Rect(centers.right, clipBounds.top, clipBounds.right, centers.top);
         Rect rect3 = new Rect(clipBounds.left, centers.bottom, centers.left, clipBounds.bottom);
