@@ -6,6 +6,7 @@ import android.view.View;
 
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
 import cat.alorma.capsulecorp.library.capsule.impl.ColorCapsule;
+import cat.alorma.capsulecorp.library.type.Type;
 import cat.alorma.capsules.ui.capsules.CustomType;
 
 /**
@@ -33,5 +34,10 @@ public class ColorsFragment extends BaseFragment {
     @Override
     protected Capsule getCapsule4() {
         return new ColorCapsule(Color.parseColor("#FF0000"));
+    }
+
+    @Override
+    protected Type getType() {
+        return null;
     }
 }

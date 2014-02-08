@@ -7,18 +7,23 @@ import android.graphics.Rect;
  */
 public class TypeThree extends Type {
 
+    public TypeThree(Rect[] rects) {
+        super(rects);
+    }
+
+    public TypeThree() {
+        super();
+    }
+
     @Override
-    public Rect[] calculateRects(Rect clipBounds, Rect centers, Rect paddings) {
+    public Type calculateRects(Rect clipBounds, Rect centers, Rect paddings) {
         Rect rect1 = new Rect(clipBounds.left, clipBounds.top, centers.left, clipBounds.bottom);
         Rect rect2 = new Rect(centers.right, clipBounds.top, clipBounds.right, centers.top);
         Rect rect3 = new Rect(centers.right, centers.bottom, clipBounds.right, clipBounds.bottom);
 
-        return new Rect[]{rect1, rect2, rect3};
+        this.setRects(new Rect[]{rect1, rect2, rect3});
+        return this;
     }
 
-    @Override
-    public int size() {
-        return 3;
-    }
 
 }

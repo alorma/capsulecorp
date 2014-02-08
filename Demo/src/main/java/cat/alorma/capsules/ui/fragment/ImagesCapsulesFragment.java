@@ -6,6 +6,7 @@ import android.view.View;
 
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
 import cat.alorma.capsulecorp.library.capsule.impl.UrlBitmapCapsule;
+import cat.alorma.capsulecorp.library.type.Type;
 import cat.alorma.capsules.ui.capsules.AQueryCapsule;
 import cat.alorma.capsules.ui.capsules.PicassoCapsule;
 
@@ -56,5 +57,10 @@ public class ImagesCapsulesFragment extends BaseFragment {
             capsule4 = new PicassoCapsule(getActivity(), "http://www.clker.com/cliparts/h/e/A/t/U/Z/red-star-hi.png");
         }
         return capsule4;
+    }
+
+    @Override
+    protected Type getType() {
+        return null;
     }
 }

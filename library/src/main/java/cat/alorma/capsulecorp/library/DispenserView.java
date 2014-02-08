@@ -28,12 +28,13 @@ import cat.alorma.capsulecorp.library.type.Type;
  */
 public class DispenserView extends View implements Capsule.CapsuleListener {
 
-    private static final int MAX_CAPSULES = 4;
     private ArrayList<Capsule> capsules;
     private Type concretType;
     private Paint paint;
     private int maskResource = -1;
+    private int BackgroundMaskResource = -1;
     private boolean maskEnabled = false;
+    private boolean backgroundMaskEnabled = false;
     private Bitmap result;
     private Bitmap original;
     private int divider_color;
@@ -66,7 +67,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         paint = new Paint();
 
         if (capsulesList != null) {
-            for (int i = 0; i < (capsulesList.size() <= MAX_CAPSULES ? capsulesList.size() : MAX_CAPSULES); i++) {
+            for (int i = 0; i < (capsulesList.size()); i++) {
                 addCapsule(capsulesList.get(i));
             }
         } else {
@@ -127,6 +128,15 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         return divider_size;
     }
 
+    public int getBackgroundMaskResource() {
+        return BackgroundMaskResource;
+    }
+
+    public void setBackgroundMaskResource(int backgroundMaskResource) {
+        BackgroundMaskResource = backgroundMaskResource;
+        postInvalidate();
+    }
+
     public void setDividerSize(int divider_size) {
         this.divider_size = divider_size;
         postInvalidate();
@@ -145,6 +155,13 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         return maskEnabled;
     }
 
+    public boolean isBackgroundMaskEnabled(){
+        return this.backgroundMaskEnabled;
+    }
+    public void  setBackgroundMaskEnabled(Boolean enabled){
+        this.backgroundMaskEnabled = enabled;
+        postInvalidate();
+    }
     public void setMaskEnabled(boolean mask) {
         this.maskEnabled = mask;
         postInvalidate();
@@ -178,11 +195,13 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
         canvas.save();
 
-        getConcretType();
+        //getConcretType();
 
+
+        Canvas originalImage = new Canvas(original);
         Rect bounds = getBoundPaint(canvas);
-        drawDividers(canvas, bounds);
-        drawCapsules(original);
+        drawDividers(originalImage, bounds);
+        drawCapsules(originalImage);
         drawMask(canvas, bounds);
 
         canvas.restore();
@@ -224,14 +243,18 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         }
     }
 
-    private void drawCapsules(Bitmap original) {
-        Canvas originalImage = new Canvas(original);
+    private void drawCapsules(Canvas originalImage) {
         Rect[] rects = getConcretType().getRects();
-        if (capsules != null && size() > 0) {
+
+        Log.i("RECT", "................................................");
+        Log.i("RECT", rects.length + " size r");
+        Log.i("RECT", capsules.size() + " size c");
+        Log.i("RECT", "................................................");
+        if (capsules != null && size() > 0 && rects != null && rects.length > 0) {
             for (int i = 0; i < size(); i++) {
                 Capsule capsule = capsules.get(i);
                 drawCapsule(originalImage, capsule, rects[i]);
-                Log.i("RECT", rects[i].toShortString());
+                Log.i("RECT", rects[i].toString());
             }
         }
     }
@@ -244,6 +267,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     private void drawMask(Canvas canvas, Rect bounds) {
         Bitmap mask = null;
+        Bitmap background = null;
         Canvas mCanvas = new Canvas(result);
 
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -253,22 +277,32 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
             mask = Bitmap.createScaledBitmap(mask, bounds.width(), bounds.height(), true);
             // mask.eraseColor(Color.TRANSPARENT);
         }
+        if(this.backgroundMaskEnabled && this.BackgroundMaskResource != -1 ){
+            background = BitmapFactory.decodeResource(getResources(), BackgroundMaskResource);
+            background = Bitmap.createScaledBitmap(background, bounds.width(), bounds.height(), true);
+
+        }
 
         if (mask != null) {
             Rect padding = getBoundPadding(canvas);
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
             mCanvas.drawBitmap(original, 0, 0, null);
             mCanvas.drawBitmap(mask, padding.left, padding.top, paint);
+            if(background != null){
+                mCanvas.drawBitmap(background,padding.left, padding.top,null);
+            }
             paint.setXfermode(null);
         } else {
             mCanvas.drawBitmap(original, 0, 0, paint);
         }
 
         canvas.drawBitmap(result, new Matrix(), new Paint());
+
+
     }
 
     private int size() {
-        int size = capsules.size() <= MAX_CAPSULES ? capsules.size() : MAX_CAPSULES;
+        int size = capsules.size();
         size = size <= getConcretType().size() ? size : getConcretType().size();
         return size;
     }

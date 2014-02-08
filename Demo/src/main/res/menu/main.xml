@@ -6,4 +6,8 @@
         android:icon="@drawable/mask"
         android:showAsAction="always"/>
 
+    <item android:id="@+id/action_background_mask"
+        android:icon="@drawable/background_mask"
+        android:showAsAction="always"/>
+
 </menu>

@@ -1,7 +1,11 @@
 package cat.alorma.capsulecorp.library.type;
 
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.View;
+
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 
 /**
@@ -21,18 +25,11 @@ public class TypeFactory {
         return setData(view, type, dividerSize);
     }
 
-    public static Type setData(View view, Type type, int dividerSize) {
+    public static Type setData(View view, Type type, int dividerSize){
         calculateClipBounds(view);
         calculatePaddings(view);
         calculateCenters(dividerSize);
-
-        type.setClipBounds(clipBounds);
-
-        type.setCenters(centers);
-
-        type.setPaddings(paddings);
-
-        return type;
+        return type.calculateRects(clipBounds,centers,paddings);
     }
 
     private static void calculateClipBounds(View view) {

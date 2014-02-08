@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/seekBar"
-            android:max="3" />
+            android:max="5"
+            android:indeterminate="false" />
     </LinearLayout>
 
     <cat.alorma.capsulecorp.library.DispenserView
