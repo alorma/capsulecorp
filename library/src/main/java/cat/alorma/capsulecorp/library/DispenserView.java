@@ -179,9 +179,11 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
         //getConcretType();
 
+
+        Canvas originalImage = new Canvas(original);
         Rect bounds = getBoundPaint(canvas);
-        drawDividers(canvas, bounds);
-        drawCapsules(original);
+        drawDividers(originalImage, bounds);
+        drawCapsules(originalImage);
         drawMask(canvas, bounds);
 
         canvas.restore();
@@ -223,8 +225,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         }
     }
 
-    private void drawCapsules(Bitmap original) {
-        Canvas originalImage = new Canvas(original);
+    private void drawCapsules(Canvas originalImage) {
         Rect[] rects = getConcretType().getRects();
 
         Log.i("RECT", "................................................");
