@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cat.alorma.capsules.R;
+import cat.alorma.capsules.ui.fragment.AnimFragment;
 import cat.alorma.capsules.ui.fragment.ColorsFragment;
 import cat.alorma.capsules.ui.fragment.CustomFragment;
 import cat.alorma.capsules.ui.fragment.ImagesCapsulesFragment;
@@ -35,6 +36,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
             titles.add("Images");
             titles.add("List");
             titles.add("Custom");
+            titles.add("Anim");
 
             for (String str : titles) {
                 ActionBar.Tab tab = getActionBar().newTab();
@@ -61,6 +63,7 @@ public class MainActivity extends Activity implements ActionBar.TabListener {
         fragments.put(2, new ImagesCapsulesFragment());
         fragments.put(3, new ListCapsulesFragment());
         fragments.put(4, new CustomFragment());
+        fragments.put(5, new AnimFragment());
     }
 
     @Override
