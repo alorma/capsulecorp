@@ -32,6 +32,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     private Type concretType;
     private Paint paint;
     private int maskResource = -1;
+    private int BackgroundMaskResource = -1;
     private boolean maskEnabled = false;
     private Bitmap result;
     private Bitmap original;
@@ -124,6 +125,15 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     public int getDividerSize() {
         return divider_size;
+    }
+
+    public int getBackgroundMaskResource() {
+        return BackgroundMaskResource;
+    }
+
+    public void setBackgroundMaskResource(int backgroundMaskResource) {
+        BackgroundMaskResource = backgroundMaskResource;
+        invalidate();
     }
 
     public void setDividerSize(int divider_size) {
@@ -249,6 +259,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     private void drawMask(Canvas canvas, Rect bounds) {
         Bitmap mask = null;
+        Bitmap background = null;
         Canvas mCanvas = new Canvas(result);
 
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -258,18 +269,28 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
             mask = Bitmap.createScaledBitmap(mask, bounds.width(), bounds.height(), true);
             // mask.eraseColor(Color.TRANSPARENT);
         }
+        if(this.maskEnabled && this.BackgroundMaskResource != -1 ){
+            background = BitmapFactory.decodeResource(getResources(), BackgroundMaskResource);
+            background = Bitmap.createScaledBitmap(background, bounds.width(), bounds.height(), true);
+
+        }
 
         if (mask != null) {
             Rect padding = getBoundPadding(canvas);
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
             mCanvas.drawBitmap(original, 0, 0, null);
             mCanvas.drawBitmap(mask, padding.left, padding.top, paint);
+            if(background != null){
+                mCanvas.drawBitmap(background,padding.left, padding.top,null);
+            }
             paint.setXfermode(null);
         } else {
             mCanvas.drawBitmap(original, 0, 0, paint);
         }
 
         canvas.drawBitmap(result, new Matrix(), new Paint());
+
+
     }
 
     private int size() {

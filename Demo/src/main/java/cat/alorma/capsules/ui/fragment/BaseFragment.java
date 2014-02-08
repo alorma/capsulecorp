@@ -137,6 +137,9 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
     public void setMaskEnabled() {
         dispenserView.setMaskEnabled(!dispenserView.isMaskEnabled());
     }
+    public void setMaskBackgroundEnabled(){
+        dispenserView.setBackgroundMaskResource(R.drawable.background_mask);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -144,6 +147,8 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
 
         if (item.getItemId() == R.id.action_mask) {
             setMaskEnabled();
+        }else if(item.getItemId() == R.id.action_background_mask){
+            setMaskBackgroundEnabled();
         }
 
         return true;
