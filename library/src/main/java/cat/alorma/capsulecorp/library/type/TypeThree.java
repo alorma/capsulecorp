@@ -21,7 +21,8 @@ public class TypeThree extends Type {
         Rect rect2 = new Rect(centers.right, clipBounds.top, clipBounds.right, centers.top);
         Rect rect3 = new Rect(centers.right, centers.bottom, clipBounds.right, clipBounds.bottom);
 
-        return new TypeThree(new Rect[]{rect1, rect2, rect3});
+        this.setRects(new Rect[]{rect1, rect2, rect3});
+        return this;
     }
 
     @Override

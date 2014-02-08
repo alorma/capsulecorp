@@ -28,7 +28,6 @@ import cat.alorma.capsulecorp.library.type.Type;
  */
 public class DispenserView extends View implements Capsule.CapsuleListener {
 
-    private static final int MAX_CAPSULES = 4;
     private ArrayList<Capsule> capsules;
     private Type concretType;
     private Paint paint;
@@ -66,7 +65,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         paint = new Paint();
 
         if (capsulesList != null) {
-            for (int i = 0; i < (capsulesList.size() <= MAX_CAPSULES ? capsulesList.size() : MAX_CAPSULES); i++) {
+            for (int i = 0; i < (capsulesList.size()); i++) {
                 addCapsule(capsulesList.get(i));
             }
         } else {
@@ -178,7 +177,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
         canvas.save();
 
-        getConcretType();
+        //getConcretType();
 
         Rect bounds = getBoundPaint(canvas);
         drawDividers(canvas, bounds);
@@ -227,11 +226,16 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     private void drawCapsules(Bitmap original) {
         Canvas originalImage = new Canvas(original);
         Rect[] rects = getConcretType().getRects();
+
+        Log.i("RECT", "................................................");
+        Log.i("RECT", rects.length + " size r");
+        Log.i("RECT", capsules.size() + " size c");
+        Log.i("RECT", "................................................");
         if (capsules != null && size() > 0 && rects != null && rects.length > 0) {
             for (int i = 0; i < size(); i++) {
                 Capsule capsule = capsules.get(i);
                 drawCapsule(originalImage, capsule, rects[i]);
-                Log.i("RECT", rects[i].toShortString());
+                Log.i("RECT", rects[i].toString());
             }
         }
     }
@@ -268,7 +272,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     }
 
     private int size() {
-        int size = capsules.size() <= MAX_CAPSULES ? capsules.size() : MAX_CAPSULES;
+        int size = capsules.size();
         size = size <= getConcretType().size() ? size : getConcretType().size();
         return size;
     }

@@ -28,7 +28,8 @@ public class CustomType extends Type {
         Rect rect2 = new Rect(terc1, clipBounds.top, terc2, clipBounds.bottom);
         Rect rect3 = new Rect(terc2 , clipBounds.top, clipBounds.right, clipBounds.bottom);
 
-        return new CustomType(new Rect[]{rect1, rect2, rect3});
+        this.setRects(new Rect[]{rect1, rect2, rect3});
+        return this;
     }
 
     @Override

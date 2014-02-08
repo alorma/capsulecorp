@@ -20,7 +20,8 @@ public class TypeTwo extends Type {
         Rect rect1 = new Rect(clipBounds.left, clipBounds.top, centers.left, clipBounds.bottom);
         Rect rect2 = new Rect(centers.right, clipBounds.top, clipBounds.right, clipBounds.bottom);
 
-        return new TypeTwo(new Rect[] {rect1, rect2});
+        this.setRects(new Rect[] {rect1, rect2});
+        return this;
     }
 
     @Override

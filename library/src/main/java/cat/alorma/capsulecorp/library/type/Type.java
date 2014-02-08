@@ -31,6 +31,9 @@ public abstract class Type {
         return rects;
     }
 
+    public void setRects(Rect[] rects){
+        this.rects = rects;
+    }
     public int size(){
         return rects.length;
     }

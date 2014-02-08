@@ -23,7 +23,8 @@ public class TypeFour extends Type {
         Rect rect3 = new Rect(clipBounds.left, centers.bottom, centers.left, clipBounds.bottom);
         Rect rect4 = new Rect(centers.right, centers.bottom, clipBounds.right, clipBounds.bottom);
 
-        return new TypeFour(new Rect[]{rect1, rect2, rect3, rect4});
+        this.setRects(new Rect[]{rect1, rect2, rect3, rect4});
+        return this;
     }
 
     @Override

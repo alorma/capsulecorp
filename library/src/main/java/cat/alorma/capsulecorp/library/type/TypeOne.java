@@ -18,7 +18,8 @@ public class TypeOne extends Type {
 
     @Override
     public Type calculateRects(Rect clipBounds, Rect centers, Rect paddings) {
-        return new TypeOne(new Rect[] {clipBounds});
+        this.setRects(new Rect[] {clipBounds});
+        return this;
     }
 
     @Override
