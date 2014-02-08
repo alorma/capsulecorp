@@ -22,8 +22,4 @@ public class TypeOne extends Type {
         return this;
     }
 
-    @Override
-    public int size() {
-        return 1;
-    }
 }

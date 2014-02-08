@@ -34,6 +34,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     private int maskResource = -1;
     private int BackgroundMaskResource = -1;
     private boolean maskEnabled = false;
+    private boolean backgroundMaskEnabled = false;
     private Bitmap result;
     private Bitmap original;
     private int divider_color;
@@ -133,7 +134,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
     public void setBackgroundMaskResource(int backgroundMaskResource) {
         BackgroundMaskResource = backgroundMaskResource;
-        invalidate();
+        postInvalidate();
     }
 
     public void setDividerSize(int divider_size) {
@@ -154,6 +155,13 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         return maskEnabled;
     }
 
+    public boolean isBackgroundMaskEnabled(){
+        return this.backgroundMaskEnabled;
+    }
+    public void  setBackgroundMaskEnabled(Boolean enabled){
+        this.backgroundMaskEnabled = enabled;
+        postInvalidate();
+    }
     public void setMaskEnabled(boolean mask) {
         this.maskEnabled = mask;
         postInvalidate();
@@ -269,7 +277,7 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
             mask = Bitmap.createScaledBitmap(mask, bounds.width(), bounds.height(), true);
             // mask.eraseColor(Color.TRANSPARENT);
         }
-        if(this.maskEnabled && this.BackgroundMaskResource != -1 ){
+        if(this.backgroundMaskEnabled && this.BackgroundMaskResource != -1 ){
             background = BitmapFactory.decodeResource(getResources(), BackgroundMaskResource);
             background = Bitmap.createScaledBitmap(background, bounds.width(), bounds.height(), true);
 

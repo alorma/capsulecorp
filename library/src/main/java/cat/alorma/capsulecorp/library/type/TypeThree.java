@@ -25,9 +25,5 @@ public class TypeThree extends Type {
         return this;
     }
 
-    @Override
-    public int size() {
-        return 3;
-    }
 
 }

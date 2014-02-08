@@ -43,6 +43,7 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
 
         dispenserView = (DispenserView) view.findViewById(R.id.dispenserView);
         dispenserView.setMaskResource(R.drawable.mask);
+        dispenserView.setBackgroundMaskResource(R.drawable.background_mask);
         dispenserView.setConcretType(getType());
 
         view.findViewById(R.id.padding0).setOnClickListener(this);
@@ -138,7 +139,7 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
         dispenserView.setMaskEnabled(!dispenserView.isMaskEnabled());
     }
     public void setMaskBackgroundEnabled(){
-        dispenserView.setBackgroundMaskResource(R.drawable.background_mask);
+        dispenserView.setBackgroundMaskEnabled(!dispenserView.isBackgroundMaskEnabled());
     }
 
     @Override

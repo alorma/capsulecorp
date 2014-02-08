@@ -24,10 +24,6 @@ public class TypeTwo extends Type {
         return this;
     }
 
-    @Override
-    public int size() {
-        return 2;
-    }
 
 
 }
