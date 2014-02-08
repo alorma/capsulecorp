@@ -29,6 +29,10 @@ import cat.alorma.capsulecorp.library.type.TypeFactory;
  * Created by Adria on 8/02/14.
  */
 public class DispenserAnimatedView extends DispenserView{
+    private Timer myTimer;
+    private UpdateCapsulesTask task;
+    private int seg = 2;
+    private ArrayList<Capsule> allCapsules;
 
     public DispenserAnimatedView(Context context) {
         super(context);
@@ -44,14 +48,28 @@ public class DispenserAnimatedView extends DispenserView{
         super(context, attrs, defStyleAttr);
         init();
     }
-    private int seg = 2;
+
     private void init(){
-        Timer myTimer = new Timer();
-        UpdateCapsulesTask task = new UpdateCapsulesTask();
-        myTimer.schedule(task, 0, seg * 1000);
+        if(myTimer != null){
+            myTimer.cancel();
+            task.cancel();
+        }
+            myTimer = new Timer();
+            task = new UpdateCapsulesTask();
+            myTimer.schedule(task, 0, seg * 1000);
+
         task.run();
     }
-    private ArrayList<Capsule> allCapsules;
+
+    public int getSeg() {
+        return seg;
+    }
+
+    public void setSeg(int seg) {
+        this.seg = seg;
+        init();
+    }
+
     public void addCapsule(Capsule capsule) {
         if(allCapsules == null){
             allCapsules = new ArrayList<Capsule>();

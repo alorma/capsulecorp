@@ -2,10 +2,12 @@ package cat.alorma.capsules.ui.fragment;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import cat.alorma.capsulecorp.library.DispenserAnimatedView;
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
 import cat.alorma.capsulecorp.library.capsule.abs.EmptyCapsule;
 import cat.alorma.capsulecorp.library.capsule.impl.ColorCapsule;
@@ -26,9 +28,14 @@ public class AnimFragment extends BaseFragment {
     }
 
     @Override
+    protected void changeView(int progress) {
+        progress++;
+        Log.e("PROGRESS", " " + progress);
+        ((DispenserAnimatedView)dispenserView).setSeg(progress);
+    }
+    @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view,savedInstanceState);
-        seekBar.setVisibility(View.GONE);
+        super.onViewCreated(view, savedInstanceState);
 
         Capsule c1 =  new TextCapsule("1", Color.parseColor("#000000"), Color.parseColor("#e67e22"));
         Capsule c2 = new EmptyCapsule();
