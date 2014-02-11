@@ -28,18 +28,18 @@ import cat.alorma.capsulecorp.library.type.Type;
  */
 public class DispenserView extends View implements Capsule.CapsuleListener {
 
-    private ArrayList<Capsule> capsules;
-    private Type concretType;
-    private Paint paint;
-    private int maskResource = -1;
-    private int BackgroundMaskResource = -1;
-    private boolean maskEnabled = false;
-    private boolean backgroundMaskEnabled = false;
-    private Bitmap result;
-    private Bitmap original;
-    private int divider_color;
-    private int divider_size;
-    private boolean isConcretTypeDefined;
+    protected ArrayList<Capsule> capsules;
+    protected Type concretType;
+    protected Paint paint;
+    protected int maskResource = -1;
+    protected int BackgroundMaskResource = -1;
+    protected boolean maskEnabled = false;
+    protected boolean backgroundMaskEnabled = false;
+    protected Bitmap result;
+    protected Bitmap original;
+    protected int divider_color;
+    protected int divider_size;
+    protected boolean isConcretTypeDefined;
 
     public DispenserView(Context context) {
         super(context);

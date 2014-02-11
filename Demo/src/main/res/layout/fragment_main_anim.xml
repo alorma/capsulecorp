@@ -1,0 +1,77 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:padding="16dp">
+        <SeekBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/seekBar"
+            android:max="5"
+            android:indeterminate="false" />
+    </LinearLayout>
+
+    <cat.alorma.capsulecorp.library.DispenserAnimatedView
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="@android:color/holo_blue_light"
+        android:padding="16dp"
+        android:id="@+id/dispenserView"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        custom:divider_color="@color/EA"
+        custom:divider_size="8dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0dp"
+        android:id="@+id/padding0"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Padding"
+        android:id="@+id/textView"
+        android:layout_above="@+id/padding0"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="10dp"
+        android:id="@+id/padding10"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/padding0" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50dp"
+        android:id="@+id/padding50"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/padding10" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="100dp"
+        android:id="@+id/padding100"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/padding50" />
+</RelativeLayout>
