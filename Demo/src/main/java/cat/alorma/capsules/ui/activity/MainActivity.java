@@ -151,7 +151,6 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mDrawerLayout.closeDrawers();

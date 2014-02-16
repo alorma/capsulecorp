@@ -9,9 +9,7 @@
         android:layout_width="100dp"
         android:layout_height="48dp"
         class="cat.alorma.capsulecorp.library.DispenserView"
-        android:id="@+id/dispenserView"
-        custom:mask_enabled="true"
-        custom:mask="@drawable/mask"/>
+        android:id="@+id/dispenserView"/>
 
     <TextView
         android:layout_width="match_parent"
