@@ -48,57 +48,63 @@ public class ContactCapsule extends Capsule {
         this.textColor = textColor;
         this.background = background;
     }
-
+    Bitmap image = null;
     @Override
     public void create(Canvas canvas, Paint paint, Rect rect) {
         ContentResolver contentResolver = context.getContentResolver();
+        if(image == null){
+            InputStream inputStream = ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, uri);
 
-        InputStream inputStream = ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, uri);
+            if (inputStream != null) {
+                BufferedInputStream buf = new BufferedInputStream(inputStream);
+                image = BitmapFactory.decodeStream(buf);
 
-        if (inputStream != null) {
-            BufferedInputStream buf = new BufferedInputStream(inputStream);
-            Bitmap bitmap = BitmapFactory.decodeStream(buf);
+                if (image != null && paint != null && rect != null) {
+                    paint.setStyle(Paint.Style.FILL);
+                    canvas.drawBitmap(image, null, rect, paint);
+                }
 
-            if (bitmap != null && paint != null && rect != null) {
-                paint.setStyle(Paint.Style.FILL);
-                canvas.drawBitmap(bitmap, null, rect, paint);
-            }
-        } else {
-            Cursor cursor = contentResolver.query(uri, PROJECTION, SELECTION, new String[]{lookup}, null);
-            if (cursor != null && cursor.moveToFirst()) {
-                int index = cursor.getColumnIndex(DISPLAY_NAME);
-                if (index > 0) {
-                    String name = cursor.getString(index);
+            } else {
+                Cursor cursor = contentResolver.query(uri, PROJECTION, SELECTION, new String[]{lookup}, null);
+                if (cursor != null && cursor.moveToFirst()) {
+                    int index = cursor.getColumnIndex(DISPLAY_NAME);
+                    if (index > 0) {
+                        String name = cursor.getString(index);
 
-                    if (name != null) {
-                        paint.setColor(background);
-                        paint.setStyle(Paint.Style.FILL);
-                        canvas.drawRect(rect, paint);
+                        if (name != null) {
+                            paint.setColor(background);
+                            paint.setStyle(Paint.Style.FILL);
+                            canvas.drawRect(rect, paint);
 
-                        name = name.toUpperCase();
+                            name = name.toUpperCase();
 
-                        paint.setStyle(Paint.Style.FILL);
-                        paint.setColor(textColor);
-                        paint.setTextAlign(Paint.Align.CENTER);
+                            paint.setStyle(Paint.Style.FILL);
+                            paint.setColor(textColor);
+                            paint.setTextAlign(Paint.Align.CENTER);
 
-                        int width90 = (rect.width() * 90) / 100;
-                        int height90 = (rect.height() * 90) / 100;
+                            int width90 = (rect.width() * 90) / 100;
+                            int height90 = (rect.height() * 90) / 100;
 
-                        int textSize = (width90 + height90) / 4;
+                            int textSize = (width90 + height90) / 4;
 
-                        paint.setTextSize(textSize);
+                            paint.setTextSize(textSize);
 
-                        int xPos = (rect.left + rect.right) / 2;
-                        int yPos = rect.top + (rect.height()) / 2;
+                            int xPos = (rect.left + rect.right) / 2;
+                            int yPos = rect.top + (rect.height()) / 2;
 
-                        float textWidth = paint.measureText(name, 0, 1);
+                            float textWidth = paint.measureText(name, 0, 1);
 
-                        yPos = (int) (yPos + textWidth / 2);
+                            yPos = (int) (yPos + textWidth / 2);
 
-                        canvas.drawText(name.substring(0, 1), xPos, yPos, paint);
+                            canvas.drawText(name.substring(0, 1), xPos, yPos, paint);
+                        }
                     }
                 }
+                cursor.close();
             }
+        }else{
+            paint.setStyle(Paint.Style.FILL);
+            canvas.drawBitmap(image, null, rect, paint);
         }
     }
 }
