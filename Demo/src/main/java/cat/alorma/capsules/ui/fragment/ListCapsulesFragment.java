@@ -22,7 +22,7 @@ import cat.alorma.capsules.ui.capsules.PicassoCapsule;
 /**
  * Created by Bernat on 25/11/13.
  */
-public class ListCapsulesFragment extends ListFragment implements AbsListView.OnScrollListener {
+public class ListCapsulesFragment extends ListFragment implements AbsListView.OnScrollListener, TitleStrip {
     private CapsulesAdapter adapter;
 
     @Override
@@ -110,5 +110,10 @@ public class ListCapsulesFragment extends ListFragment implements AbsListView.On
         }
 
         return true;
+    }
+
+    @Override
+    public String getTitle() {
+        return "List";
     }
 }

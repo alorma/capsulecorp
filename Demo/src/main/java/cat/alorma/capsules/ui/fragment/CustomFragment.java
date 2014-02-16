@@ -58,4 +58,9 @@ public class CustomFragment extends BaseFragment {
                 break;
         }
     }
+
+    @Override
+    public String getTitle() {
+        return "Custom type";
+    }
 }

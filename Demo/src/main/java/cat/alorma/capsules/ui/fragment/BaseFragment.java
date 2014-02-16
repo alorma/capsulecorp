@@ -18,7 +18,7 @@ import cat.alorma.capsules.R;
 /**
  * Created by Bernat on 25/11/13.
  */
-public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBarChangeListener, View.OnClickListener {
+public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBarChangeListener, View.OnClickListener, TitleStrip {
 
     protected DispenserView dispenserView;
 

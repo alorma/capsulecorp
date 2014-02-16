@@ -35,4 +35,9 @@ public class TextColorsFragment extends BaseFragment {
     protected Type getType() {
         return null;
     }
+
+    @Override
+    public String getTitle() {
+        return "Texts";
+    }
 }

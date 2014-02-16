@@ -1,1 +1,1 @@
-include ':library', ':Demo'
+include ':library', ':Demo', ':Demo-Maven'

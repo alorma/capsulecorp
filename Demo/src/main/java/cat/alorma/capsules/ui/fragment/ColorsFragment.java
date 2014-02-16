@@ -40,4 +40,9 @@ public class ColorsFragment extends BaseFragment {
     protected Type getType() {
         return null;
     }
+
+    @Override
+    public String getTitle() {
+        return "Colors";
+    }
 }

@@ -96,4 +96,9 @@ public class AnimFragment extends BaseFragment {
     protected Type getType() {
         return new CustomTypeFive();
     }
+
+    @Override
+    public String getTitle() {
+        return "Animation";
+    }
 }
