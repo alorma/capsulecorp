@@ -12,10 +12,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 import cat.alorma.capsulecorp.library.DispenserView;
+import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
 import cat.alorma.capsulecorp.library.capsule.impl.ContactCapsule;
 import cat.alorma.capsules.R;
 import cat.alorma.capsules.ui.capsules.AQueryCapsule;
@@ -31,6 +33,7 @@ public class ContactsAdapter extends CursorAdapter {
             ContactsContract.Contacts.DISPLAY_NAME;
 
     private final LayoutInflater layoutInflater;
+    private int scrollState;
 
     public ContactsAdapter(Context context, Cursor c) {
         this(context, c, true);
@@ -45,8 +48,10 @@ public class ContactsAdapter extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup parent) {
         View v = layoutInflater.inflate(R.layout.row, null);
 
-        if (v != null) {
-            v.setTag(ViewHolder.create(v));
+        if (scrollState != AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+            if (v != null) {
+                v.setTag(ViewHolder.create(v));
+            }
         }
 
         return v;
@@ -57,16 +62,29 @@ public class ContactsAdapter extends CursorAdapter {
         if (view.getTag() != null) {
             ViewHolder vh = (ViewHolder) view.getTag();
 
-            long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-            String name = cursor.getString(cursor.getColumnIndex(DISPLAY_NAME));
-            String lookup = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
-
-            vh.textView.setText(name);
-
-            Uri uri = ContactsContract.Contacts.getLookupUri(id, lookup);
-
             vh.dispenserView.clear();
-            vh.dispenserView.addCapsule(new ContactCapsule(context, lookup, uri, Color.BLACK, Color.RED));
+            vh.textView.setText("");
+
+            if (scrollState != AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+                long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
+                String name = cursor.getString(cursor.getColumnIndex(DISPLAY_NAME));
+                String lookup = cursor.getString(cursor.getColumnIndex(ContactsContract.Contacts.LOOKUP_KEY));
+
+                vh.textView.setText(name);
+
+                Uri uri = ContactsContract.Contacts.getLookupUri(id, lookup);
+
+                vh.capsule = new ContactCapsule(context, lookup, uri, Color.BLACK, Color.RED);
+
+                vh.dispenserView.addCapsule(vh.capsule);
+            }
+        }
+    }
+
+    public void setScrollState(int scrollState) {
+        this.scrollState = scrollState;
+        if (scrollState != AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
+            notifyDataSetChanged();
         }
     }
 
@@ -74,6 +92,7 @@ public class ContactsAdapter extends CursorAdapter {
         public final View rootView;
         public final DispenserView dispenserView;
         public final TextView textView;
+        public Capsule capsule;
 
         private ViewHolder(View rootView, DispenserView dispenserView, TextView textView) {
             this.rootView = rootView;

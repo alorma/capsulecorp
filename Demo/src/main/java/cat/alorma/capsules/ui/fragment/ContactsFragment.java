@@ -10,13 +10,14 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
+import android.widget.AbsListView;
 
 import cat.alorma.capsules.ui.adapter.ContactsAdapter;
 
 /**
  * Created by Bernat on 16/02/14.
  */
-public class ContactsFragment extends ListFragment implements TitleStrip, LoaderManager.LoaderCallbacks<Cursor> {
+public class ContactsFragment extends ListFragment implements TitleStrip, LoaderManager.LoaderCallbacks<Cursor>, AbsListView.OnScrollListener {
 
     private static String DISPLAY_NAME = Build.VERSION.SDK_INT
             >= Build.VERSION_CODES.HONEYCOMB ?
@@ -40,6 +41,10 @@ public class ContactsFragment extends ListFragment implements TitleStrip, Loader
 
         if (getLoaderManager() != null) {
             getLoaderManager().initLoader(0, null, this);
+        }
+
+        if (getListView() != null) {
+            getListView().setOnScrollListener(this);
         }
     }
 
@@ -67,5 +72,15 @@ public class ContactsFragment extends ListFragment implements TitleStrip, Loader
     @Override
     public void onLoaderReset(Loader<Cursor> loader) {
         adapter.swapCursor(null);
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+        adapter.setScrollState(scrollState);
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
     }
 }

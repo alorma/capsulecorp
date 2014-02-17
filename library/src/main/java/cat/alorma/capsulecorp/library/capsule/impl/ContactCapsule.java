@@ -15,6 +15,7 @@ import android.os.Build;
 import android.provider.ContactsContract;
 
 import java.io.BufferedInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
@@ -48,22 +49,27 @@ public class ContactCapsule extends Capsule {
         this.textColor = textColor;
         this.background = background;
     }
+
     Bitmap image = null;
+
     @Override
     public void create(Canvas canvas, Paint paint, Rect rect) {
         ContentResolver contentResolver = context.getContentResolver();
-        if(image == null){
+        if (image == null) {
             InputStream inputStream = ContactsContract.Contacts.openContactPhotoInputStream(contentResolver, uri);
 
             if (inputStream != null) {
-                BufferedInputStream buf = new BufferedInputStream(inputStream);
-                image = BitmapFactory.decodeStream(buf);
-
-                if (image != null && paint != null && rect != null) {
-                    paint.setStyle(Paint.Style.FILL);
-                    canvas.drawBitmap(image, null, rect, paint);
+                try {
+                    BufferedInputStream buf = new BufferedInputStream(inputStream);
+                    image = BitmapFactory.decodeStream(buf);
+                    if (image != null && paint != null && rect != null) {
+                        paint.setStyle(Paint.Style.FILL);
+                        canvas.drawBitmap(image, null, rect, paint);
+                    }
+                    inputStream.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-
             } else {
                 Cursor cursor = contentResolver.query(uri, PROJECTION, SELECTION, new String[]{lookup}, null);
                 if (cursor != null && cursor.moveToFirst()) {
@@ -99,10 +105,11 @@ public class ContactCapsule extends Capsule {
                             canvas.drawText(name.substring(0, 1), xPos, yPos, paint);
                         }
                     }
+
+                    cursor.close();
                 }
-                cursor.close();
             }
-        }else{
+        } else {
             paint.setStyle(Paint.Style.FILL);
             canvas.drawBitmap(image, null, rect, paint);
         }
