@@ -62,8 +62,8 @@ public class ContactsAdapter extends CursorAdapter {
         if (view.getTag() != null) {
             ViewHolder vh = (ViewHolder) view.getTag();
 
-            vh.dispenserView.clear();
-            vh.textView.setText("");
+           /* vh.dispenserView.clear();
+            vh.textView.setText("");*/
 
             if (scrollState != AbsListView.OnScrollListener.SCROLL_STATE_FLING) {
                 long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
@@ -76,7 +76,7 @@ public class ContactsAdapter extends CursorAdapter {
 
                 vh.capsule = new ContactCapsule(context, lookup, uri, Color.BLACK, Color.RED);
 
-                vh.dispenserView.addCapsule(vh.capsule);
+                /*vh.dispenserView.addCapsule(vh.capsule);*/
             }
         }
     }

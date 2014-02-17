@@ -31,7 +31,7 @@ public class AnimFragment extends BaseFragment {
     protected void changeView(int progress) {
         progress++;
         Log.e("PROGRESS", " " + progress);
-        ((DispenserAnimatedView)dispenserView).setSeg(progress);
+        /*((DispenserAnimatedView)dispenserView).setSeg(progress);*/
     }
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -54,7 +54,7 @@ public class AnimFragment extends BaseFragment {
         Capsule c15 = new TextCapsule("4", Color.parseColor("#000000"), Color.parseColor("#1abc9c"));
 
 
-        dispenserView.addCapsule(c1);
+        /*dispenserView.addCapsule(c1);
         dispenserView.addCapsule(c2);
         dispenserView.addCapsule(c3);
         dispenserView.addCapsule(c4);
@@ -68,7 +68,7 @@ public class AnimFragment extends BaseFragment {
         dispenserView.addCapsule(c12);
         dispenserView.addCapsule(c13);
         dispenserView.addCapsule(c14);
-        dispenserView.addCapsule(c15);
+        dispenserView.addCapsule(c15);*/
 
     }
 

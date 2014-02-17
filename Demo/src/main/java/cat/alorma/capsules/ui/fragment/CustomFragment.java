@@ -50,11 +50,11 @@ public class CustomFragment extends BaseFragment {
         progress++;
         switch (progress) {
             case 5:
-                dispenserView.addCapsule(getCapsule1());
+                /*dispenserView.addCapsule(getCapsule1());
                 dispenserView.addCapsule(getCapsule2());
                 dispenserView.addCapsule(getCapsule3());
                 dispenserView.addCapsule(getCapsule4());
-                dispenserView.addCapsule(new TextCapsule("5", Color.parseColor("#000000"), Color.parseColor("#bdc3c7")));
+                dispenserView.addCapsule(new TextCapsule("5", Color.parseColor("#000000"), Color.parseColor("#bdc3c7")));*/
                 break;
         }
     }

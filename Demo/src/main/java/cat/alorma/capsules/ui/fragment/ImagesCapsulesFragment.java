@@ -24,7 +24,7 @@ public class ImagesCapsulesFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        dispenserView.setDividerColor(Color.parseColor("#AEAEAE"));
+        /*dispenserView.setDividerColor(Color.parseColor("#AEAEAE"));*/
     }
 
     @Override

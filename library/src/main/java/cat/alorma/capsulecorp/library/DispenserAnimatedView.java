@@ -29,6 +29,19 @@ import cat.alorma.capsulecorp.library.type.TypeFactory;
  * Created by Adria on 8/02/14.
  */
 public class DispenserAnimatedView extends DispenserView{
+    public DispenserAnimatedView(Context context) {
+        super(context);
+    }
+
+    public DispenserAnimatedView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+    }
+
+    public DispenserAnimatedView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+    }
+
+    /*
     private Timer myTimer;
     private UpdateCapsulesTask task;
     private int seg = 2;
@@ -94,7 +107,7 @@ public class DispenserAnimatedView extends DispenserView{
             DispenserAnimatedView.this.postInvalidate();
         }
     }
-
+*/
 
 
 

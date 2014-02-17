@@ -20,6 +20,7 @@ import java.util.List;
 
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
 import cat.alorma.capsulecorp.library.capsule.impl.TextCapsule;
+import cat.alorma.capsulecorp.library.distributor.Distributor;
 import cat.alorma.capsulecorp.library.type.TypeFactory;
 import cat.alorma.capsulecorp.library.type.Type;
 
@@ -28,18 +29,10 @@ import cat.alorma.capsulecorp.library.type.Type;
  */
 public class DispenserView extends View implements Capsule.CapsuleListener {
 
-    protected ArrayList<Capsule> capsules;
-    protected Type concretType;
     protected Paint paint;
-    protected int maskResource = -1;
-    protected int BackgroundMaskResource = -1;
-    protected boolean maskEnabled = false;
-    protected boolean backgroundMaskEnabled = false;
     protected Bitmap result;
     protected Bitmap original;
-    protected int divider_color;
-    protected int divider_size;
-    protected boolean isConcretTypeDefined;
+    private Distributor distribuidor;
 
     public DispenserView(Context context) {
         super(context);
@@ -56,25 +49,10 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         init(attrs);
     }
 
-    private void init(AttributeSet attrs) {
-        init(attrs, null);
-    }
-
-    public void init(AttributeSet attrs, List<Capsule> capsulesList) {
+    public void init(AttributeSet attrs) {
         getAttributes(attrs);
         isInEditMode();
-        capsules = new ArrayList<Capsule>();
         paint = new Paint();
-
-        if (capsulesList != null) {
-            for (int i = 0; i < (capsulesList.size()); i++) {
-                addCapsule(capsulesList.get(i));
-            }
-        } else {
-            int black = Color.parseColor("#000000");
-            int white = Color.parseColor("#FFFFFF");
-            addCapsule(new TextCapsule("C", white, black));
-        }
     }
 
     @Override
@@ -91,13 +69,8 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
             if (a != null) {
                 try {
-                    maskEnabled = a.getBoolean(R.styleable.dispenserattrs_mask_enabled, false);
-                    maskResource = a.getResourceId(R.styleable.dispenserattrs_mask, -1);
-                    divider_color = a.getInt(R.styleable.dispenserattrs_divider_color, -1);
-                    if (divider_color == -1) {
-                        divider_color = Color.parseColor("#EAEAEA");
-                    }
-                    divider_size = Utils.dividerSize(getContext(), a);
+                    // TODO MASK
+                    // TODO DIVIDER
                 } finally {
                     a.recycle();
                 }
@@ -105,109 +78,39 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         }
     }
 
-    private Type getConcretType() {
-        if (!isConcretTypeDefined) {
-            concretType = TypeFactory.newInstance(this, capsules.size(), divider_size);
-        }
-        return concretType;
-    }
-
-    public void setConcretType(Type concretType) {
-        if (concretType != null) {
-            this.isConcretTypeDefined = true;
-            this.concretType = concretType;
-        }
-        postInvalidate();
-    }
-
-    public int getMaskResource() {
-        return maskResource;
-    }
-
-    public int getDividerSize() {
-        return divider_size;
-    }
-
-    public int getBackgroundMaskResource() {
-        return BackgroundMaskResource;
-    }
-
-    public void setBackgroundMaskResource(int backgroundMaskResource) {
-        BackgroundMaskResource = backgroundMaskResource;
-        postInvalidate();
-    }
-
-    public void setDividerSize(int divider_size) {
-        this.divider_size = divider_size;
-        postInvalidate();
-    }
-
-    public int getDividerColor() {
-        return divider_color;
-    }
-
-    public void setDividerColor(int divider_color) {
-        this.divider_color = divider_color;
-        postInvalidate();
-    }
-
-    public boolean isMaskEnabled() {
-        return maskEnabled;
-    }
-
-    public boolean isBackgroundMaskEnabled(){
-        return this.backgroundMaskEnabled;
-    }
-    public void  setBackgroundMaskEnabled(Boolean enabled){
-        this.backgroundMaskEnabled = enabled;
-        postInvalidate();
-    }
-    public void setMaskEnabled(boolean mask) {
-        this.maskEnabled = mask;
-        postInvalidate();
-    }
-
-    public void setMaskResource(int maskResource) {
-        this.maskResource = maskResource;
-        postInvalidate();
-    }
-
-    public void addCapsule(Capsule capsule) {
-        if (capsules == null) {
-            capsules = new ArrayList<Capsule>();
-        }
-        if (capsule != null) {
-            capsule.setCapsuleListener(this);
-            capsules.add(capsules.size(), capsule);
-        }
-    }
-
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        TypeFactory.setData(this, getConcretType(), divider_size);
+        if (distribuidor != null) {
 
-        if (result == null && original == null) {
-            result = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
-            original = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
+            distribuidor.getType().calculateRects(canvas.getClipBounds(), null, null);
+
+            // TypeFactory.setData(this, distribuidor.getType(), distribuidor.getDivider());
+
+            if (result == null && original == null) {
+                result = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
+                original = Bitmap.createBitmap(canvas.getWidth(), canvas.getHeight(), Bitmap.Config.ARGB_8888);
+            }
+
+            canvas.save();
+
+            Canvas originalImage = new Canvas(original);
+            // Rect bounds = getBoundPaint(canvas);
+            // drawCapsules(originalImage);
+
+            distribuidor.draw(canvas, paint);
+
+            /*
+            drawDividers(originalImage, bounds);
+            drawMask(canvas, bounds);
+            */
+
+            canvas.restore();
+
+            result = null;
+            original = null;
         }
-
-        canvas.save();
-
-        //getConcretType();
-
-
-        Canvas originalImage = new Canvas(original);
-        Rect bounds = getBoundPaint(canvas);
-        drawDividers(originalImage, bounds);
-        drawCapsules(originalImage);
-        drawMask(canvas, bounds);
-
-        canvas.restore();
-
-        result = null;
-        original = null;
     }
 
     private Rect getBoundPaint(Canvas canvas) {
@@ -235,22 +138,14 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     }
 
     private void drawDividers(Canvas canvas, Rect bounds) {
-        if (divider_size > 0 || divider_color != -1) {
-            Paint dividerPaint = new Paint();
-            dividerPaint.setStyle(Paint.Style.FILL);
-            dividerPaint.setColor(divider_color);
-            canvas.drawRect(bounds, dividerPaint);
+        if (distribuidor != null) {
+            distribuidor.drawDividers(canvas, bounds);
         }
     }
 
-    private void drawCapsules(Canvas originalImage) {
-        Rect[] rects = getConcretType().getRects();
-        if (capsules != null && size() > 0 && rects != null && rects.length > 0) {
-            for (int i = 0; i < size(); i++) {
-                Capsule capsule = capsules.get(i);
-                drawCapsule(originalImage, capsule, rects[i]);
-                Log.i("RECT", rects[i].toString());
-            }
+    private void drawCapsules(Canvas canvas) {
+        if (distribuidor != null) {
+
         }
     }
 
@@ -267,24 +162,24 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
 
         Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
 
-        if (this.maskEnabled && maskResource != -1) {
+        /*if (this.maskEnabled && maskResource != -1) {
             mask = BitmapFactory.decodeResource(getResources(), maskResource);
             mask = Bitmap.createScaledBitmap(mask, bounds.width(), bounds.height(), true);
             // mask.eraseColor(Color.TRANSPARENT);
         }
-        if(this.backgroundMaskEnabled && this.BackgroundMaskResource != -1 ){
+        if (this.backgroundMaskEnabled && this.BackgroundMaskResource != -1) {
             background = BitmapFactory.decodeResource(getResources(), BackgroundMaskResource);
             background = Bitmap.createScaledBitmap(background, bounds.width(), bounds.height(), true);
 
-        }
+        }*/
 
         if (mask != null) {
             Rect padding = getBoundPadding(canvas);
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_IN));
             mCanvas.drawBitmap(original, 0, 0, null);
             mCanvas.drawBitmap(mask, padding.left, padding.top, paint);
-            if(background != null){
-                mCanvas.drawBitmap(background,padding.left, padding.top,null);
+            if (background != null) {
+                mCanvas.drawBitmap(background, padding.left, padding.top, null);
             }
             paint.setXfermode(null);
         } else {
@@ -294,17 +189,6 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
         canvas.drawBitmap(result, new Matrix(), new Paint());
 
 
-    }
-
-    private int size() {
-        int size = capsules.size();
-        size = size <= getConcretType().size() ? size : getConcretType().size();
-        return size;
-    }
-
-    public void clear() {
-        capsules.clear();
-        postInvalidate();
     }
 
     @Override
@@ -321,5 +205,9 @@ public class DispenserView extends View implements Capsule.CapsuleListener {
     public void setPadding(int padding) {
         setPadding(padding, padding, padding, padding);
         postInvalidate();
+    }
+
+    public void setDistribuidor(Distributor distribuidor) {
+        this.distribuidor = distribuidor;
     }
 }

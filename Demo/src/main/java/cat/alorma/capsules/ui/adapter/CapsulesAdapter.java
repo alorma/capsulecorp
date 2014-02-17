@@ -87,14 +87,14 @@ public class CapsulesAdapter extends ArrayAdapter<Data> {
         if (!isFling) {
             vh.textView.setText(data.getName());
             if (data.getCapsules() != null) {
-                vh.dispenserView.clear();
+                /*vh.dispenserView.clear();
                 for (int i = 0; i < (data.getCapsules().size() <= 4 ? data.getCapsules().size() : 4); i++) {
                     vh.dispenserView.addCapsule(data.getCapsules().get(i));
                 }
                 vh.dispenserView.setMaskEnabled(maskEnabled);
                 if (position % 5 == 0) {
                     vh.dispenserView.setConcretType(new CustomType());
-                }
+                }*/
             }
         }
 

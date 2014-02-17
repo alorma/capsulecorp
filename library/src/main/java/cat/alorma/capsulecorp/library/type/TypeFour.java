@@ -18,10 +18,10 @@ public class TypeFour extends Type {
 
     @Override
     public Type calculateRects(Rect clipBounds, Rect centers, Rect paddings) {
-        Rect rect1 = new Rect(clipBounds.left, clipBounds.top, centers.left, centers.top);
-        Rect rect2 = new Rect(centers.right, clipBounds.top, clipBounds.right, centers.top);
-        Rect rect3 = new Rect(clipBounds.left, centers.bottom, centers.left, clipBounds.bottom);
-        Rect rect4 = new Rect(centers.right, centers.bottom, clipBounds.right, clipBounds.bottom);
+        Rect rect1 = new Rect(clipBounds.left, clipBounds.top, clipBounds.width() / 2, clipBounds.height() / 2);
+        Rect rect2 = new Rect(clipBounds.width() / 2, clipBounds.top, clipBounds.width(), clipBounds.height() / 2);
+        Rect rect3 = new Rect(clipBounds.left, clipBounds.height() / 2, clipBounds.width() / 2, clipBounds.bottom);
+        Rect rect4 = new Rect(clipBounds.width() / 2, clipBounds.height() / 2, clipBounds.width(), clipBounds.bottom);
 
         this.setRects(new Rect[]{rect1, rect2, rect3, rect4});
         return this;

@@ -7,6 +7,8 @@ import android.view.View;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
+import cat.alorma.capsulecorp.library.xtras.Divider;
+
 
 /**
  * Created by Bernat on 7/02/14.
@@ -16,20 +18,22 @@ public class TypeFactory {
     private static Rect centers;
     private static Rect paddings;
 
-    public static Type newInstance(View view, int size, int dividerSize) {
+    public static Type newInstance(View view, int size, Divider divider) {
         Type type = createType(size);
         calculateClipBounds(view);
         calculatePaddings(view);
-        calculateCenters(dividerSize);
+        calculateCenters(divider.getSize());
 
-        return setData(view, type, dividerSize);
+        return setData(view, type, divider);
     }
 
-    public static Type setData(View view, Type type, int dividerSize){
+    public static Type setData(View view, Type type, Divider divider) {
         calculateClipBounds(view);
         calculatePaddings(view);
-        calculateCenters(dividerSize);
-        return type.calculateRects(clipBounds,centers,paddings);
+        if (divider != null) {
+            calculateCenters(divider.getSize());
+        }
+        return type.calculateRects(clipBounds, centers, paddings);
     }
 
     private static void calculateClipBounds(View view) {
@@ -47,7 +51,7 @@ public class TypeFactory {
         clipBounds.top = paddingTop;
         clipBounds.bottom = clipBounds.bottom - paddingBottom;
 
-        paddings = new Rect(paddingLeft,paddingTop,paddingRight,paddingBottom);
+        paddings = new Rect(paddingLeft, paddingTop, paddingRight, paddingBottom);
     }
 
     private static Type createType(int size) {
@@ -82,6 +86,6 @@ public class TypeFactory {
             centerYB = centerYB + (dividerSize / 2);
         }
 
-        centers = new Rect(centerXL,centerYT,centerXR,centerYB);
+        centers = new Rect(centerXL, centerYT, centerXR, centerYB);
     }
 }

@@ -9,11 +9,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SeekBar;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import cat.alorma.capsulecorp.library.DispenserView;
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
 import cat.alorma.capsulecorp.library.capsule.impl.TextCapsule;
+import cat.alorma.capsulecorp.library.distributor.Distributor;
 import cat.alorma.capsulecorp.library.type.Type;
+import cat.alorma.capsulecorp.library.type.TypeFour;
 import cat.alorma.capsules.R;
+import cat.alorma.capsules.ui.capsules.CustomTypeFour;
 
 /**
  * Created by Bernat on 25/11/13.
@@ -41,10 +47,22 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        List<Capsule> list = new ArrayList<Capsule>();
+        list.add(getCapsule1());
+        list.add(getCapsule2());
+        list.add(getCapsule3());
+        list.add(getCapsule4());
+
+        Distributor distributor = new Distributor(list);
+        distributor.setType(new TypeFour());
+
         dispenserView = (DispenserView) view.findViewById(R.id.dispenserView);
-        dispenserView.setMaskResource(R.drawable.mask);
+
+        dispenserView.setDistribuidor(distributor);
+
+        /*dispenserView.setMaskResource(R.drawable.mask);
         dispenserView.setBackgroundMaskResource(R.drawable.background_mask);
-        dispenserView.setConcretType(getType());
+        dispenserView.setConcretType(getType());*/
 
         view.findViewById(R.id.padding0).setOnClickListener(this);
         view.findViewById(R.id.padding10).setOnClickListener(this);
@@ -64,7 +82,7 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
     }
 
     protected void changeView(int progress) {
-        progress++;
+        /*progress++;
         dispenserView.clear();
         switch (progress) {
             case 4:
@@ -85,7 +103,10 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
             case 1:
                 dispenserView.addCapsule(getCapsule1());
                 break;
-        }
+            case 0:
+                dispenserView.clear();
+                break;
+        }*/
     }
 
     protected abstract Capsule getCapsule1();
@@ -129,10 +150,10 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
     }
 
     public void setMaskEnabled() {
-        dispenserView.setMaskEnabled(!dispenserView.isMaskEnabled());
+        /*dispenserView.setMaskEnabled(!dispenserView.isMaskEnabled());*/
     }
     public void setMaskBackgroundEnabled(){
-        dispenserView.setBackgroundMaskEnabled(!dispenserView.isBackgroundMaskEnabled());
+        /*dispenserView.setBackgroundMaskEnabled(!dispenserView.isBackgroundMaskEnabled());*/
     }
 
     @Override
