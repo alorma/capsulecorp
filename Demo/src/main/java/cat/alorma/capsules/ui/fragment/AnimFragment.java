@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import cat.alorma.capsulecorp.library.DispenserAnimatedView;
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
 import cat.alorma.capsulecorp.library.capsule.abs.EmptyCapsule;
 import cat.alorma.capsulecorp.library.capsule.impl.ColorCapsule;

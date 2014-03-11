@@ -8,7 +8,7 @@
     <view
         android:layout_width="100dp"
         android:layout_height="48dp"
-        class="cat.alorma.capsulecorp.library.DispenserView"
+        class="cat.alorma.capsulecorp.library.DispenserViewOld"
         android:id="@+id/dispenserView"/>
 
     <TextView

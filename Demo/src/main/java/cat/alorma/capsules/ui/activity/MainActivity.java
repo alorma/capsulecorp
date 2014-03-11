@@ -26,6 +26,7 @@ import cat.alorma.capsules.ui.fragment.ContactsFragment;
 import cat.alorma.capsules.ui.fragment.CustomFragment;
 import cat.alorma.capsules.ui.fragment.ImagesCapsulesFragment;
 import cat.alorma.capsules.ui.fragment.ListCapsulesFragment;
+import cat.alorma.capsules.ui.fragment.SimpleCapsuleFragment;
 import cat.alorma.capsules.ui.fragment.TextColorsFragment;
 import cat.alorma.capsules.ui.fragment.TitleStrip;
 
@@ -93,6 +94,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
     private void createFragments() {
         fragments = new ArrayList<Fragment>();
 
+        fragments.add(new SimpleCapsuleFragment());
         fragments.add(new ColorsFragment());
         fragments.add(new TextColorsFragment());
         fragments.add(new ImagesCapsulesFragment());
@@ -104,9 +106,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         fragments.trimToSize();
 
         for (int i = 0; i < fragments.size(); i++) {
-            TitleStrip t = (TitleStrip) fragments.get(i);
-            Log.i("ALORMA", "Pos: " + i + " -> " + t.getTitle());
-            adapter.add(t.getTitle());
+            if (fragments.get(i) instanceof TitleStrip) {
+                TitleStrip t = (TitleStrip) fragments.get(i);
+                adapter.add(t.getTitle());
+            }
         }
     }
 

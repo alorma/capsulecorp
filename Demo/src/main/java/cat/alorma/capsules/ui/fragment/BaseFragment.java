@@ -1,7 +1,6 @@
 package cat.alorma.capsules.ui.fragment;
 
 import android.app.Fragment;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -12,21 +11,19 @@ import android.widget.SeekBar;
 import java.util.ArrayList;
 import java.util.List;
 
-import cat.alorma.capsulecorp.library.DispenserView;
+import cat.alorma.capsulecorp.library.DispenserViewOld;
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
-import cat.alorma.capsulecorp.library.capsule.impl.TextCapsule;
 import cat.alorma.capsulecorp.library.distributor.Distributor;
 import cat.alorma.capsulecorp.library.type.Type;
 import cat.alorma.capsulecorp.library.type.TypeFour;
 import cat.alorma.capsules.R;
-import cat.alorma.capsules.ui.capsules.CustomTypeFour;
 
 /**
  * Created by Bernat on 25/11/13.
  */
 public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBarChangeListener, View.OnClickListener, TitleStrip {
 
-    protected DispenserView dispenserView;
+    protected DispenserViewOld dispenserView;
 
     protected SeekBar seekBar;
 
@@ -56,7 +53,7 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
         Distributor distributor = new Distributor(list);
         distributor.setType(new TypeFour());
 
-        dispenserView = (DispenserView) view.findViewById(R.id.dispenserView);
+        dispenserView = (DispenserViewOld) view.findViewById(R.id.dispenserView);
 
         dispenserView.setDistribuidor(distributor);
 

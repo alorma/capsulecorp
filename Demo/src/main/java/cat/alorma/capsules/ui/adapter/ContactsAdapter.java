@@ -1,14 +1,11 @@
 package cat.alorma.capsules.ui.adapter;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +13,10 @@ import android.widget.AbsListView;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
 
-import cat.alorma.capsulecorp.library.DispenserView;
+import cat.alorma.capsulecorp.library.DispenserViewOld;
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
 import cat.alorma.capsulecorp.library.capsule.impl.ContactCapsule;
 import cat.alorma.capsules.R;
-import cat.alorma.capsules.ui.capsules.AQueryCapsule;
 
 /**
  * Created by Bernat on 16/02/14.
@@ -90,18 +86,18 @@ public class ContactsAdapter extends CursorAdapter {
 
     private static class ViewHolder {
         public final View rootView;
-        public final DispenserView dispenserView;
+        public final DispenserViewOld dispenserView;
         public final TextView textView;
         public Capsule capsule;
 
-        private ViewHolder(View rootView, DispenserView dispenserView, TextView textView) {
+        private ViewHolder(View rootView, DispenserViewOld dispenserView, TextView textView) {
             this.rootView = rootView;
             this.dispenserView = dispenserView;
             this.textView = textView;
         }
 
         public static ViewHolder create(View rootView) {
-            DispenserView dispenserView = (DispenserView) rootView.findViewById(R.id.dispenserView);
+            DispenserViewOld dispenserView = (DispenserViewOld) rootView.findViewById(R.id.dispenserView);
             TextView textView = (TextView) rootView.findViewById(R.id.textView);
             return new ViewHolder(rootView, dispenserView, textView);
         }
