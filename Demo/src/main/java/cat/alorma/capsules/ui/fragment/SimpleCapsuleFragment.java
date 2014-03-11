@@ -2,6 +2,7 @@ package cat.alorma.capsules.ui.fragment;
 
 import android.app.Fragment;
 import android.graphics.Color;
+import android.graphics.Rect;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,6 +26,15 @@ public class SimpleCapsuleFragment extends Fragment implements TitleStrip{
         super.onViewCreated(view, savedInstanceState);
 
         CapsuleView capsuleView = (CapsuleView) view.findViewById(R.id.capsuleView);
+
+        Rect clipBounds = new Rect();
+        clipBounds.left = 0;
+        clipBounds.right = 300;
+        clipBounds.top = 0;
+        clipBounds.bottom = 600;
+
+        // capsuleView.setRect(clipBounds);
+
         capsuleView.setCapsule(new TextCapsule("B", Color.RED, Color.BLUE));
     }
 

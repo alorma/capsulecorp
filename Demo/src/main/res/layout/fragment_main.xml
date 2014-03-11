@@ -21,7 +21,7 @@
             android:indeterminate="false" />
     </LinearLayout>
 
-    <cat.alorma.capsulecorp.library.DispenserView
+    <cat.alorma.capsulecorp.library.DispenserViewOld
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:background="@android:color/holo_blue_light"
