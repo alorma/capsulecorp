@@ -98,10 +98,10 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         fragments.add(new ColorsFragment());
         fragments.add(new TextColorsFragment());
         fragments.add(new ImagesCapsulesFragment());
-        fragments.add(new ListCapsulesFragment());
-        fragments.add(new CustomFragment());
-        fragments.add(new AnimFragment());
-        fragments.add(new ContactsFragment());
+        //fragments.add(new ListCapsulesFragment());
+        // fragments.add(new CustomFragment());
+        // fragments.add(new AnimFragment());
+        // fragments.add(new ContactsFragment());
 
         fragments.trimToSize();
 
