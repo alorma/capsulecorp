@@ -43,7 +43,7 @@ public abstract class Capsule implements CapsuleDrawer{
     }
 
     public interface CapsuleListener {
-        void invalidateParent();
+        void requestInvalidate();
     }
 
 }

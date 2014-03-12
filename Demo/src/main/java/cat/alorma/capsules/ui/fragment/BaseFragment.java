@@ -6,8 +6,10 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.SeekBar;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +25,7 @@ import cat.alorma.capsules.R;
 /**
  * Created by Bernat on 25/11/13.
  */
-public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBarChangeListener, View.OnClickListener, TitleStrip {
+public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBarChangeListener, View.OnClickListener, TitleStrip, AdapterView.OnItemClickListener {
 
     protected DispenserView dispenserView;
 
@@ -50,10 +52,14 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
         dispenserView = (DispenserView) view.findViewById(R.id.dispenserView);
 
         adapter = new CapsulesAdapter(getActivity());
-        adapter.add(getCapsule2());
-        adapter.add(getCapsule1());
 
         dispenserView.setAdapter(adapter);
+        adapter.add(getCapsule1());
+        adapter.add(getCapsule2());
+        adapter.add(getCapsule3());
+        //adapter.add(getCapsule4());
+
+        dispenserView.setOnItemClickListener(this);
 
         view.findViewById(R.id.padding0).setOnClickListener(this);
         view.findViewById(R.id.padding10).setOnClickListener(this);
@@ -158,5 +164,10 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
         }
 
         return true;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Toast.makeText(getActivity(), "Capsule [" + position + "] clicked", Toast.LENGTH_SHORT).show();
     }
 }

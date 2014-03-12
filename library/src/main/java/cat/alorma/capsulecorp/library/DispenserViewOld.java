@@ -192,7 +192,7 @@ public class DispenserViewOld extends View implements Capsule.CapsuleListener {
     }
 
     @Override
-    public void invalidateParent() {
+    public void requestInvalidate() {
         postInvalidate();
     }
 

@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
@@ -14,10 +15,11 @@ import cat.alorma.capsulecorp.library.capsule.impl.TextCapsule;
 /**
  * Created by Bernat on 11/03/14.
  */
-public class CapsuleView extends View {
+public class CapsuleView extends View implements Capsule.CapsuleListener {
     private Capsule capsule;
     private Paint paint;
     private Rect rect;
+    private boolean drawed = false;
 
     public CapsuleView(Context context) {
         super(context);
@@ -52,6 +54,9 @@ public class CapsuleView extends View {
         if (this.capsule == null) {
             this.capsule = new TextCapsule("C", Color.WHITE, Color.BLACK);
         }
+
+        capsule.setCapsuleListener(this);
+
         this.paint = new Paint();
     }
 
@@ -74,13 +79,18 @@ public class CapsuleView extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        if (rect == null) {
-            rect = canvas.getClipBounds();
-        }
+        //if (!drawed) {
+            Log.i("PRINT", "Capsule is printed " + toString());
 
-        if (capsule != null) {
-            capsule.boom(canvas, paint, rect);
-        }
+            if (rect == null) {
+                rect = canvas.getClipBounds();
+            }
+
+            if (capsule != null) {
+                capsule.boom(canvas, paint, rect);
+            }
+            drawed = true;
+        //}
     }
 
     public Rect getRect() {
@@ -89,5 +99,11 @@ public class CapsuleView extends View {
 
     public void setRect(Rect rect) {
         this.rect = rect;
+    }
+
+    @Override
+    public void requestInvalidate() {
+        drawed = false;
+        invalidate();
     }
 }

@@ -29,7 +29,7 @@ public abstract class ImageUrlCapsule extends BitmapCapsule {
         this.downloadedBitmap = downloadedBitmap;
 
         if (getCapsuleListener() != null) {
-            getCapsuleListener().invalidateParent();
+            getCapsuleListener().requestInvalidate();
         }
     }
 }
