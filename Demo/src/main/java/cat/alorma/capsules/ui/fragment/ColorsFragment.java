@@ -14,8 +14,6 @@ import cat.alorma.capsules.ui.capsules.CustomType;
  */
 public class ColorsFragment extends BaseFragment {
 
-
-
     @Override
     protected Capsule getCapsule1() {
         return new ColorCapsule(Color.parseColor("#e67e22"));

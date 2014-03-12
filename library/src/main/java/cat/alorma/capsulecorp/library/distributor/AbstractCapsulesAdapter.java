@@ -1,35 +1,65 @@
 package cat.alorma.capsulecorp.library.distributor;
 
+import android.content.Context;
 import android.database.DataSetObserver;
 import android.graphics.Rect;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Adapter;
+import android.widget.AdapterView;
+import android.widget.ListAdapter;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import cat.alorma.capsulecorp.library.CapsuleView;
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
 
 /**
  * Created by Bernat on 11/03/14.
  */
-public abstract class AbstractCapsulesAdapter implements Adapter {
+public abstract class AbstractCapsulesAdapter implements ListAdapter {
+
+    private List<Capsule> capsules;
+    private Context context;
+    private DataSetObserver dataSetObservable;
+
+    public AbstractCapsulesAdapter(Context context) {
+        this.context = context;
+        capsules = new ArrayList<Capsule>();
+    }
+
+    @Override
+    public boolean areAllItemsEnabled() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled(int position) {
+        return true;
+    }
+
     @Override
     public void registerDataSetObserver(DataSetObserver observer) {
-
+        this.dataSetObservable = observer;
     }
 
     @Override
     public void unregisterDataSetObserver(DataSetObserver observer) {
-
+        if (dataSetObservable != null) {
+            dataSetObservable.onInvalidated();
+            dataSetObservable = null;
+        }
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return capsules.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public Capsule getItem(int position) {
+        return capsules.get(position);
     }
 
     @Override
@@ -43,30 +73,35 @@ public abstract class AbstractCapsulesAdapter implements Adapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        getRect(position, new Rect(0, 0, 200, 200), 0);
+    public CapsuleView getView(int position, View convertView, ViewGroup parent) {
+        Rect parentRect = new Rect();
+        parent.getDrawingRect(parentRect);
+        Rect rect = getRect(position, parentRect, 0, capsules.size());
 
-        return null;
+        return new CapsuleView(context, capsules.get(position), rect);
     }
 
-    protected abstract void getRect(int position, Rect paintRect, int paddingSize);
+    protected abstract Rect getRect(int position, Rect paintRect, int paddingSize, int capsulesSize);
 
     @Override
     public int getItemViewType(int position) {
-        return 0;
+        return AdapterView.ITEM_VIEW_TYPE_IGNORE;
     }
 
     @Override
     public int getViewTypeCount() {
-        return 0;
+        return 1;
     }
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return capsules.size() == 0;
     }
 
     public void add(Capsule capsule) {
-
+        this.capsules.add(capsule);
+        if (dataSetObservable != null) {
+            dataSetObservable.onChanged();
+        }
     }
 }

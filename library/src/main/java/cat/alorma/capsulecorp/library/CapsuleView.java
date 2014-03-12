@@ -7,7 +7,6 @@ import android.graphics.Paint;
 import android.graphics.Rect;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.ViewGroup;
 
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
 import cat.alorma.capsulecorp.library.capsule.impl.TextCapsule;
@@ -25,6 +24,19 @@ public class CapsuleView extends View {
         init();
     }
 
+    public CapsuleView(Context context, Capsule capsule) {
+        super(context);
+        this.capsule = capsule;
+        init();
+    }
+
+    public CapsuleView(Context context, Capsule capsule, Rect rect) {
+        super(context);
+        this.capsule = capsule;
+        setRect(rect);
+        init();
+    }
+
     public CapsuleView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init();
@@ -37,7 +49,9 @@ public class CapsuleView extends View {
 
     private void init() {
         isInEditMode();
-        this.capsule = new TextCapsule("C", Color.WHITE, Color.BLACK);
+        if (this.capsule == null) {
+            this.capsule = new TextCapsule("C", Color.WHITE, Color.BLACK);
+        }
         this.paint = new Paint();
     }
 
@@ -57,8 +71,8 @@ public class CapsuleView extends View {
     }
 
     @Override
-    public void draw(Canvas canvas) {
-        super.draw(canvas);
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
 
         if (rect == null) {
             rect = canvas.getClipBounds();
@@ -74,22 +88,6 @@ public class CapsuleView extends View {
     }
 
     public void setRect(Rect rect) {
-        if (rect == null) {
-            rect = new Rect();
-        }
-
         this.rect = rect;
-
-        ViewGroup.LayoutParams layoutParams = getLayoutParams();
-        if (layoutParams == null) {
-            layoutParams = new ViewGroup.LayoutParams(rect.width(), rect.height());
-        } else {
-            layoutParams.height = rect.height();
-            layoutParams.width = rect.width();
-        }
-
-        setLayoutParams(layoutParams);
-
-        invalidate();
     }
 }

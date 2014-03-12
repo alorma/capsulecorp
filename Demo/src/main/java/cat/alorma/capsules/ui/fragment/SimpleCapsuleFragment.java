@@ -27,14 +27,6 @@ public class SimpleCapsuleFragment extends Fragment implements TitleStrip{
 
         CapsuleView capsuleView = (CapsuleView) view.findViewById(R.id.capsuleView);
 
-        Rect clipBounds = new Rect();
-        clipBounds.left = 0;
-        clipBounds.right = 300;
-        clipBounds.top = 0;
-        clipBounds.bottom = 600;
-
-        // capsuleView.setRect(clipBounds);
-
         capsuleView.setCapsule(new TextCapsule("B", Color.RED, Color.BLUE));
     }
 

@@ -21,11 +21,10 @@
             android:indeterminate="false" />
     </LinearLayout>
 
-    <cat.alorma.capsulecorp.library.DispenserViewOld
+    <cat.alorma.capsulecorp.library.DispenserView
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:background="@android:color/holo_blue_light"
-        android:padding="16dp"
         android:id="@+id/dispenserView"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"

@@ -78,7 +78,7 @@ public class MainActivity extends Activity implements AdapterView.OnItemClickLis
         mListDrawer.setAdapter(adapter);
         mListDrawer.setOnItemClickListener(this);
 
-        setFragment(0);
+        setFragment(1);
     }
 
     private void setFragment(int position) {

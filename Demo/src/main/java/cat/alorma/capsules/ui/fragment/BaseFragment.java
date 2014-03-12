@@ -6,13 +6,15 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListAdapter;
 import android.widget.SeekBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import cat.alorma.capsulecorp.library.DispenserViewOld;
+import cat.alorma.capsulecorp.library.DispenserView;
 import cat.alorma.capsulecorp.library.capsule.abs.Capsule;
+import cat.alorma.capsulecorp.library.distributor.CapsulesAdapter;
 import cat.alorma.capsulecorp.library.distributor.Distributor;
 import cat.alorma.capsulecorp.library.type.Type;
 import cat.alorma.capsulecorp.library.type.TypeFour;
@@ -23,9 +25,10 @@ import cat.alorma.capsules.R;
  */
 public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBarChangeListener, View.OnClickListener, TitleStrip {
 
-    protected DispenserViewOld dispenserView;
+    protected DispenserView dispenserView;
 
     protected SeekBar seekBar;
+    private CapsulesAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,22 +47,13 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        List<Capsule> list = new ArrayList<Capsule>();
-        list.add(getCapsule1());
-        list.add(getCapsule2());
-        list.add(getCapsule3());
-        list.add(getCapsule4());
+        dispenserView = (DispenserView) view.findViewById(R.id.dispenserView);
 
-        Distributor distributor = new Distributor(list);
-        distributor.setType(new TypeFour());
+        adapter = new CapsulesAdapter(getActivity());
+        adapter.add(getCapsule2());
+        adapter.add(getCapsule1());
 
-        dispenserView = (DispenserViewOld) view.findViewById(R.id.dispenserView);
-
-        dispenserView.setDistribuidor(distributor);
-
-        /*dispenserView.setMaskResource(R.drawable.mask);
-        dispenserView.setBackgroundMaskResource(R.drawable.background_mask);
-        dispenserView.setConcretType(getType());*/
+        dispenserView.setAdapter(adapter);
 
         view.findViewById(R.id.padding0).setOnClickListener(this);
         view.findViewById(R.id.padding10).setOnClickListener(this);
@@ -143,7 +137,7 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
                 padding = 100;
                 break;
         }
-        dispenserView.setPadding(padding);
+        // dispenserView.setPadding(padding);
     }
 
     public void setMaskEnabled() {
