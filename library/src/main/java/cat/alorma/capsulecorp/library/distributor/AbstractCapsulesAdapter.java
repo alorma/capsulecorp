@@ -31,12 +31,17 @@ public abstract class AbstractCapsulesAdapter implements ListAdapter {
 
     @Override
     public boolean areAllItemsEnabled() {
+        for (Capsule c : capsules) {
+            if (!c.isEnabled()) {
+                return false;
+            }
+        }
         return true;
     }
 
     @Override
     public boolean isEnabled(int position) {
-        return true;
+        return capsules.get(position).isEnabled();
     }
 
     @Override
@@ -76,9 +81,9 @@ public abstract class AbstractCapsulesAdapter implements ListAdapter {
     public CapsuleView getView(int position, View convertView, ViewGroup parent) {
         Rect parentRect = new Rect();
         parent.getDrawingRect(parentRect);
-        Rect rect = getRect(position, parentRect, 0, capsules.size());
+        Rect rect = getRect(position, parentRect, 0, getCount());
 
-        return new CapsuleView(context, capsules.get(position), rect);
+        return new CapsuleView(context, getItem(position), rect);
     }
 
     protected abstract Rect getRect(int position, Rect paintRect, int paddingSize, int capsulesSize);

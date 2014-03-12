@@ -56,7 +56,7 @@ public class CapsulesAdapter extends AbstractCapsulesAdapter {
                 rect = new Rect(parentRect.left, parentRect.top, parentRect.width() / 3, parentRect.bottom);
                 break;
             case 1:
-                rect = new Rect(parentRect.width() / 3, parentRect.bottom / 2, (parentRect.left + parentRect.right) / 2, parentRect.bottom);
+                rect = new Rect(parentRect.width() / 3, parentRect.bottom / 3, parentRect.right - 50, parentRect.bottom);
                 break;
             case 2:
                 rect = new Rect((parentRect.left + parentRect.right) / 2, parentRect.bottom / 2, parentRect.right, parentRect.bottom);
@@ -72,10 +72,10 @@ public class CapsulesAdapter extends AbstractCapsulesAdapter {
                 rect = new Rect(parentRect.left, parentRect.top, (parentRect.left + parentRect.right) / 2, parentRect.bottom / 2);
                 break;
             case 1:
-                rect = new Rect(parentRect.left, parentRect.bottom / 2, (parentRect.left + parentRect.right) / 2, parentRect.bottom);
+                rect = new Rect((parentRect.left + parentRect.right) / 2, parentRect.top, parentRect.right, parentRect.bottom / 2);
                 break;
             case 2:
-                rect = new Rect(parentRect.left, parentRect.bottom / 2, parentRect.right, parentRect.bottom);
+                rect = new Rect(parentRect.left, parentRect.bottom / 2, (parentRect.left + parentRect.right) / 2, parentRect.bottom);
                 break;
             case 3:
                 rect = new Rect((parentRect.left + parentRect.right) / 2, parentRect.bottom / 2, parentRect.right, parentRect.bottom);

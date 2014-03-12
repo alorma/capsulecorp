@@ -13,6 +13,7 @@ public abstract class Capsule implements CapsuleDrawer{
     private Canvas canvas;
     private Paint paint;
     private Rect rect;
+    private boolean enabled = true;
 
     public void boom(Canvas canvas, Paint paint, Rect rect) {
         this.canvas = canvas;
@@ -40,6 +41,14 @@ public abstract class Capsule implements CapsuleDrawer{
 
     public Rect getRect() {
         return rect;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
     }
 
     public interface CapsuleListener {

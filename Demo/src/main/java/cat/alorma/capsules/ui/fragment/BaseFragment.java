@@ -30,7 +30,7 @@ public abstract class BaseFragment extends Fragment implements SeekBar.OnSeekBar
     protected DispenserView dispenserView;
 
     protected SeekBar seekBar;
-    private CapsulesAdapter adapter;
+    protected CapsulesAdapter adapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

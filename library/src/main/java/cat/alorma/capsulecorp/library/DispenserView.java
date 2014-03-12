@@ -1,12 +1,10 @@
 package cat.alorma.capsulecorp.library;
 
 import android.content.Context;
-import android.database.DataSetObserver;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.SparseArray;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -59,9 +57,10 @@ public class DispenserView extends AdapterView<AbstractCapsulesAdapter> {
         }
 
         if (getChildCount() == 0) {
-            Log.i("PRINT", "Dispenser print");
             for (int i = 0; i < adapter.getCount(); i++) {
-                makeAddView(i);
+                if (adapter.isEnabled(i)) {
+                    makeAddView(i);
+                }
             }
         }
     }
@@ -73,8 +72,9 @@ public class DispenserView extends AdapterView<AbstractCapsulesAdapter> {
                 ViewGroup.LayoutParams p = child.getLayoutParams();
                 if (p == null) {
                     p = generateDefaultLayoutParams();
+                    child.setLayoutParams(p);
                 }
-                if (addViewInLayout(child, position, p, false)) {
+                if (addViewInLayout(child, 0, p, true)) {
                     int l = child.getRect().left;
                     int t = child.getRect().top;
                     int r = child.getRect().right;

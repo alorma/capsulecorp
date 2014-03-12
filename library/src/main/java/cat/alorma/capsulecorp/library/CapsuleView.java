@@ -19,7 +19,6 @@ public class CapsuleView extends View implements Capsule.CapsuleListener {
     private Capsule capsule;
     private Paint paint;
     private Rect rect;
-    private boolean drawed = false;
 
     public CapsuleView(Context context) {
         super(context);
@@ -79,18 +78,21 @@ public class CapsuleView extends View implements Capsule.CapsuleListener {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
 
-        //if (!drawed) {
-            Log.i("PRINT", "Capsule is printed " + toString());
+        if (capsule.isEnabled()) {
 
             if (rect == null) {
                 rect = canvas.getClipBounds();
             }
 
+            rect.right = rect.width();
+            rect.bottom = rect.height();
+            rect.left = 0;
+            rect.top = 0;
+
             if (capsule != null) {
                 capsule.boom(canvas, paint, rect);
             }
-            drawed = true;
-        //}
+        }
     }
 
     public Rect getRect() {
@@ -103,7 +105,6 @@ public class CapsuleView extends View implements Capsule.CapsuleListener {
 
     @Override
     public void requestInvalidate() {
-        drawed = false;
         invalidate();
     }
 }
