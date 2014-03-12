@@ -15,15 +15,9 @@ import cat.alorma.capsules.ui.capsules.CustomType;
 public class ColorsFragment extends BaseFragment {
 
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        adapter.add(getCapsule4());
-    }
-
-    @Override
     protected Capsule getCapsule1() {
         Capsule capsule = new ColorCapsule(Color.parseColor("#e67e22"));
-        capsule.setEnabled(false);
+        capsule.setEnabled(true);
         return capsule;
     }
 

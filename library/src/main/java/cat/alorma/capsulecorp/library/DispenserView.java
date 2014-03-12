@@ -1,6 +1,7 @@
 package cat.alorma.capsulecorp.library;
 
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -20,7 +21,6 @@ public class DispenserView extends AdapterView<AbstractCapsulesAdapter> {
     private Paint paint;
 
     private AbstractCapsulesAdapter adapter;
-    private SparseArray<CapsuleView> childs;
 
     public DispenserView(Context context) {
         super(context);
@@ -38,7 +38,6 @@ public class DispenserView extends AdapterView<AbstractCapsulesAdapter> {
     }
 
     public void init(AttributeSet attrs) {
-        childs = new SparseArray<CapsuleView>();
         paint = new Paint();
     }
 
@@ -74,7 +73,7 @@ public class DispenserView extends AdapterView<AbstractCapsulesAdapter> {
                     p = generateDefaultLayoutParams();
                     child.setLayoutParams(p);
                 }
-                if (addViewInLayout(child, 0, p, true)) {
+                if (addViewInLayout(child, position, p, true)) {
                     int l = child.getRect().left;
                     int t = child.getRect().top;
                     int r = child.getRect().right;
@@ -82,7 +81,6 @@ public class DispenserView extends AdapterView<AbstractCapsulesAdapter> {
                     child.layout(l, t, r, b);
                 }
             }
-            childs.put(position, child);
         }
     }
 
@@ -96,12 +94,41 @@ public class DispenserView extends AdapterView<AbstractCapsulesAdapter> {
         return adapter;
     }
 
+    @Override
+    public void invalidate() {
+        super.invalidate();
+        removeAllViewsInLayout();
+        requestLayout();
+    }
+
     public void setAdapter(AbstractCapsulesAdapter adapter) {
         this.adapter = adapter;
+
+        if (adapter != null) {
+            adapter.registerDataSetObserver(new DataSetObserver() {
+                @Override
+                public void onChanged() {
+                    super.onChanged();
+                    invalidate();
+                }
+
+                @Override
+                public void onInvalidated() {
+                    super.onInvalidated();
+                    invalidate();
+                }
+            });
+        }
     }
 
     @Override
     public View getSelectedView() {
         return null;
+    }
+
+
+    public void setPadding(int padding) {
+        setPadding(padding, padding, padding, padding);
+        invalidate();
     }
 }

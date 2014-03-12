@@ -109,4 +109,20 @@ public abstract class AbstractCapsulesAdapter implements ListAdapter {
             dataSetObservable.onChanged();
         }
     }
+
+    public void remove(int location) {
+        if (location >= capsules.size()){
+            capsules.remove(location);
+            if (dataSetObservable != null) {
+                dataSetObservable.onChanged();
+            }
+        }
+    }
+
+    public void clear() {
+        capsules.clear();
+        if (dataSetObservable != null) {
+            dataSetObservable.onChanged();
+        }
+    }
 }
